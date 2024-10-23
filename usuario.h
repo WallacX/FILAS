@@ -3,7 +3,7 @@
 
 typedef struct Usuario{
     int id;
-    bo eVegetariano;
+    bool eVegetariano;
     Bancada *bancada;
     struct usuario *prox;
     //int tempoDeEspera; //Ainda não sei se vai ser necessario.
