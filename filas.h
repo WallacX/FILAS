@@ -1,14 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NPROBING1
-#define QTDMINING1
-#define QTDMAXING1
+#define inicia_srand srand(time(NULL))
+#define ACEITACAOINGREDIENTE1 rand()%51+50 
 
+#define NPROBINGREDIENTE
+#define QTDMININGREDIENTE
+#define QTDMAXINGREDIENTE
+#define TAMCARDAPIO 6
 typedef struct{
-    int grauAceitacao;
+    int grauAceitacao ;
     char nome[15];
 }Ingrediente;
 
-void criaIngrediente(Ingrediente *ingrediente, char *nome);
+void criaIngrediente(Ingrediente *ingrediente);
 
+void defineCardapio();
