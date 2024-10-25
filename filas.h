@@ -29,7 +29,7 @@ typedef struct{
     Bancada *bancada;
     int tempoAtendimento;
     int tempoTrabalhado;
-    int tempoTdescanso;
+    int tempoDescanso;
 }Servente;
 
 void gera_servente(Servente *servente);
