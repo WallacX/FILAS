@@ -2,15 +2,13 @@
 
 
 void gera_servente(Servente *servente){
-    
-    servente->bcd = NULL;
-    servente->igd = NULL;    
-    servente->identificacao = qtdserventes;
-    servente->tservir = TEMPO_SERVIR;
-    servente->ttrabalhado = 0;
-    servente->tdescanso = 0;
-    qtdserventes++;
-}
+    servente->id = ++qtdserventes;
+    servente->qtdSsuarioAtendidos = 0;
+    servente->bancada = NULL;
+    servente->tempoAtendimento = 0;
+    servente->tempoTrabalhado = 0;
+    servente->tempoDescanso = 0;
+}Servente;
 
 
 /* FUNÇÃO NÃO FINALIZADA

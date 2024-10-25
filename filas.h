@@ -18,18 +18,18 @@ macro), tempo de trabalho (max 60s); tempo de descanso(pelo menos 30s)
 #define TEMPO_SERVIR rand()%4+3
 
 #define QTDMINSER 3
-#define QTDMAXSER 75
+#define QTDMAXSERVENTES 30
 
 int qtdserventes = 0;
 
 
 typedef struct{
-    int *bcd; //ponteiro pra bancada
-    int *igd; //ponteiro pro igrediente que está servindo
-    int identificacao;
-    int tservir;
-    int ttrabalhado;
-    int tdescanso;
+    int id;
+    int qtdSsuarioAtendidos;
+    Bancada *bancada;
+    int tempoAtendimento;
+    int tempoTrabalhado;
+    int tempoTdescanso;
 }Servente;
 
 void gera_servente(Servente *servente);
