@@ -1,7 +1,11 @@
-#include <stdio.h>
-#include "filas.h"
+#include "filas.c"
+#include "ingrediente.c"
+#include "usuario.c"
+#include "vasilha.c"
+#include "servente.c"
+#include "bancada.c"
 
 int main(){
-    printf("Olá Mundo!");
+    
     return 0;
 }
