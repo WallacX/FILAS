@@ -1,14 +1,13 @@
-#include "globais.h"
+#include <stdio.h>
+#include <stdbool.h>
 
 
-#define QUANT_USU_MAX 5                   //Quantidade máxima de usuários que chegam por segundo.
+#define QTD_MAX_USUARIOS 5   //Quantidade máxima de usuários que chegam por segundo.
 
 typedef struct Usuario{
     int id;
     bool eVegetariano;
-    Bancada *bancada;
-    struct usuario *prox;
-    //int tempoDeEspera; //Ainda não sei se vai ser necessario.
+    int tempoEsperaFila;
 }Usuario;
 
 void iniciaUsuario (Usuario *usuario, int id);

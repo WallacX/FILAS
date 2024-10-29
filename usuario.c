@@ -1,8 +1,7 @@
 #include "usuario.h"
 
-
 void iniciaUsuario (Usuario *usuario, int id){
-    usuario -> id = id;
+    usuario -> id = ++id; 
 
     int vegetariano = rand() % 101;
     if (vegetariano > 80){
@@ -11,9 +10,6 @@ void iniciaUsuario (Usuario *usuario, int id){
     else {
         usuario -> eVegetariano = false;
     }
-    
-    usuario -> bancada = NULL;
-    usuario -> prox = NULL;
 
     return;
 }

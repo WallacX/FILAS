@@ -1,4 +1,5 @@
-#include "globais.h"
+#include <stdio.h>
+#include "bancada.h"
 
 #define inicia_srand srand(time(NULL))
 #define TEMPO_SERVIR rand()%4+3

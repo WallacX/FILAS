@@ -12,7 +12,6 @@ macro), tempo de trabalho (max 60s); tempo de descanso(pelo menos 30s)
 
 
 //Variavéis globais
-
 #include "servente.h"
 
 

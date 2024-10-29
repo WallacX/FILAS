@@ -1,10 +1,11 @@
-#include "globais.h"
+#include <stdio.h>
+#include "ingrediente.h"
 
 #define CAPACIDADE_INGREDIENTE 10000 //em gramas
 #define TEMPO_SUBSTITUICAO 3 //em minutos
 
 typedef struct{
-    //Ingrediente *ingrediente;
+    Ingrediente *ingrediente;
     int qtdRestante;
 }Vasilha;
 
@@ -14,18 +15,3 @@ typedef struct{
 #define QTD_MAX_SERVENTES 6
 
 static int qtdBancadasAtv = 0; //quantidade de bancadas ativas
-
-
-typedef struct{
-    Vasilha *vasilhas[QTD_MAX_SERVENTES];
-    int identificador;
-}Bancada;
-
-
-void iniciarBancada(Bancada *bancada);
-
-void desativarBancada(Bancada *bancada);
-
-void iniciarVasilha(Vasilha *vasilha);
-
-void colocarVasilhaNaBancada(Vasilha *vasilha, Bancada *bancada, int pos);
