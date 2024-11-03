@@ -4,7 +4,7 @@
 #define TEMPO_SUBSTITUICAO 3 //em minutos
 
 typedef struct{
-    //Ingrediente *ingrediente;
+    Ingrediente *ingrediente;
     int qtdRestante;
 }Vasilha;
 
