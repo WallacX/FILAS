@@ -1,10 +1,12 @@
 #include "vasilhas.h"
 #include <stdio.h>
 
-void iniciarVasilha(Vasilha *vasilha){
+void iniciarVasilha(Vasilha *vasilha, Ingrediente *ingrediente){
     vasilha->qtdRestante = CAPACIDADE_INGREDIENTE;
-    printf("\nvasilha iniciada");
+    vasilha->ingrediente = ingrediente;
+    //printf("\nvasilha iniciada");
 }
+
 
 void iniciarBancada(Bancada *bancada){
     bancada->identificador = ++qtdBancadasAtv;
