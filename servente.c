@@ -16,10 +16,41 @@ macro), tempo de trabalho (max 60s); tempo de descanso(pelo menos 30s)
 
 
 void gera_servente(Servente *servente){
-    servente->id = ++qtdserventes;
+    
+    servente->id = ++qtdServentes;
     servente->qtdSsuarioAtendidos = 0;
     servente->bancada = NULL;
-    servente->tempoAtendimento = 0;
+    servente->tempoAtendimento = TEMPO_SERVIR;
     servente->tempoTrabalhado = 0;
     servente->tempoDescanso = 0;
 }Servente;
+
+
+Servente *geraServente(){
+
+    if(qtdServentes < QTDMAXSERVENTES){
+        srand(time(NULL));
+        Servente *aux = (Servente *)malloc(sizeof(Servente));
+        aux->id = ++qtdServentes;
+        aux->qtdSsuarioAtendidos = 0;
+        aux->bancada = NULL;
+        aux->tempoAtendimento = TEMPO_SERVIR;
+        aux->tempoTrabalhado = 0;
+        aux->tempoDescanso = 0;
+        return aux;
+    }
+    else{
+        printf("Qtd maxima de serventes criada\n");
+        return NULL;
+    }
+    
+}
+
+int main(){
+    Servente s1;
+
+    gera_servente(&s1);
+    printf("Tempo s1: %d", s1.tempoAtendimento);
+    
+    return 0;
+}
