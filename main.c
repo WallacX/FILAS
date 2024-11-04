@@ -1,7 +1,11 @@
-#include <stdio.h>
 #include "filas.h"
 
 int main(){
-    printf("Olá Mundo!");
+    Ingrediente cardapio[TAMCARDAPIO];
+    srand(time(NULL)); 
+
+    criaCardapio(cardapio);
+    imprimeCardapio(cardapio);
+
     return 0;
 }
