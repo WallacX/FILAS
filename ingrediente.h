@@ -1,19 +1,24 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
-#define inicia_srand srand(time(NULL))
-#define ACEITACAOINGREDIENTE1 rand()%51+50 
+#ifndef INGREDIENTE_H
+#define INGREDIENTE_H
 
-
-//#define NPROBINGREDIENTE
-//#define QTDMININGREDIENTE
-//#define QTDMAXINGREDIENTE
+#define TAMMAXNOMEINGREDIENTE 15
 #define TAMCARDAPIO 6
+#define TOTALINGREDIENTES 12
 
-typedef struct{
+typedef struct Ingrediente{
     int grauAceitacao ;
-    char nome[15];
+    char nome[TAMMAXNOMEINGREDIENTE];
 }Ingrediente;
 
-//void criaIngrediente(Ingrediente *ingrediente);
+Ingrediente criaIngrediente(int grauAceit, const char nome[]);
 
-//void defineCardapio();
+void criaCardapio(Ingrediente cardapio[]);
+
+void imprimeCardapio(Ingrediente cardapio[]);
+
+#endif // INGREDIENTE_H
