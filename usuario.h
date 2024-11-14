@@ -1,14 +1,28 @@
-#include "globais.h"
+#ifndef USUARIO_H
+#define USUARIO_H
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <time.h>
+#include <stdlib.h>
+
+#include "ingrediente.h"
 
 
-#define QUANT_USU_MAX 5                   //Quantidade máxima de usuários que chegam por segundo.
+#define MAXUSUARIOSGERADOSPORSEGUNDO 3
 
-typedef struct Usuario{
+
+extern int qtdTotalUsuarios;
+
+
+typedef struct{
     int id;
-    bool eVegetariano;
-    Bancada *bancada;
-    struct usuario *prox;
-    //int tempoDeEspera; //Ainda não sei se vai ser necessario.
+    bool vegetariano;
+    bool aceitacao[TAMCARDAPIO];
 }Usuario;
 
-void iniciaUsuario (Usuario *usuario, int id);
+
+void iniciaUsuario(Usuario *usuario, Ingrediente cardapio[]);
+
+
+#endif // USUARIO_H
