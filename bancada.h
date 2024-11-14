@@ -1,21 +1,31 @@
-#include "globais.h"
+#ifndef BANCADA_H
+#define BANCADA_H
 
+#include <stdio.h>
+#include "vasilha.h"
+#include "usuario.h"
 
-#define QTDMINBANCADA 2
-#define QTDMAXBANCADA 4
-
-#define QTDMINSERVENTEBANCADA 3         
+#define QTDMINBANCADAS 2
+#define QTDMAXBANCADAS 4
+#define QTDMINSERVENTEBANCADA 3       
 #define QTDMAXSERVENTEBANCADA 6
 
-int qtdbanatv = 0;
 
-typedef struct{
-    Vasilha *vasilha[6];
-    int identificador; 
+extern int qtdBancadasAtivas;
+
+
+typedef struct Bancada{
+    int identificador;
+    int qtdUsuariosAtendidos;
+    Vasilha vasilhas[TAMCARDAPIO];
+    //podemos fazer dentro da struct ou ent um vetor global contando que vai somar o tempo dos atendentes
+    Usuario *usuario;
 }Bancada;
 
-void iniciarBancadas(Bancada *bancada);
 
-void ativarBancada(Bancada *bancada, int identificador);
 
-void desativarBancada(Bancada *bancada, int identificador);
+void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]);
+
+
+
+#endif // BANCADA_H
