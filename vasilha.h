@@ -13,7 +13,7 @@ typedef struct Vasilha{
     int qtdRestante;
 }Vasilha;
 
-void iniciarVasilha(Vasilha *vasilha, Ingrediente ingrediente);
+void iniciaVasilha(Vasilha *vasilha, Ingrediente ingrediente);
 
 
 #endif // VASILHA_H
