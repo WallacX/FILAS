@@ -3,10 +3,10 @@
 
 #include <stdio.h>
 #include "vasilha.h"
+#include "usuario.h"
 
-
-#define QTDMINBANCADA 2
-#define QTDMAXBANCADA 4
+#define QTDMINBANCADAS 2
+#define QTDMAXBANCADAS 4
 #define QTDMINSERVENTEBANCADA 3       
 #define QTDMAXSERVENTEBANCADA 6
 
@@ -17,17 +17,14 @@ extern int qtdBancadasAtivas;
 typedef struct Bancada{
     int identificador;
     int qtdUsuariosAtendidos;
-    Vasilha vasilhas[TAMCARDAPIO];//trocar pelo tamanho do cardapio
+    Vasilha vasilhas[TAMCARDAPIO];
     //podemos fazer dentro da struct ou ent um vetor global contando que vai somar o tempo dos atendentes
-    //Usuario *usuario;
-    
+    Usuario *usuario;
 }Bancada;
 
 
 
-
-void iniciarBancada(Bancada *bancada, Ingrediente cardapio[]);
-
+void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]);
 
 
 
