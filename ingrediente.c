@@ -1,11 +1,9 @@
 #include "ingrediente.h"
 
-
 const char *todosIngredientes[] = {
     "Arroz", "Feijao", "Carne", "Salada", "Macarrao", "Frango",
     "Peixe", "Legumes", "Batata", "Ovo", "Sopa", "Fruta"
 };
-
 
 void criaCardapio(Ingrediente cardapio[]){
     
@@ -16,13 +14,13 @@ void criaCardapio(Ingrediente cardapio[]){
     for(int i = 0; i < TAMCARDAPIO; i++){
         int indiceAleatorio;
 
-        do {
+        do{
             indiceAleatorio = rand() % TOTALINGREDIENTES;
-        } while (indicesUsados[indiceAleatorio] != 0);
+        }while(indicesUsados[indiceAleatorio] != 0);
 
         indicesUsados[indiceAleatorio] = 1;
 
-        int grauAceitacao = rand() % 100 + 1;
+        int grauAceitacao = rand() % 51 + 50;
 
         cardapio[i] = criaIngrediente(grauAceitacao, todosIngredientes[indiceAleatorio]); //cria e add ingrediente ao cardapio
     }
