@@ -1,17 +1,19 @@
+#ifndef VASILHA_H
+#define VASILHA_H
+
 #include <stdio.h>
 #include "ingrediente.h"
 
-#define CAPACIDADE_INGREDIENTE 10000 //em gramas
-#define TEMPO_SUBSTITUICAO 3 //em minutos
+#define CAPACIDADE_INGREDIENTE 10000
+#define TEMPO_SUBSTITUICAO 3
 
-typedef struct{
-    Ingrediente *ingrediente;
+
+typedef struct Vasilha{
+    Ingrediente ingrediente;
     int qtdRestante;
 }Vasilha;
 
-#define QTD_MIN_BANCADAS 1
-#define QTD_MAX_BANCADAS 10
-#define QTD_MIN_SERVENTES 3
-#define QTD_MAX_SERVENTES 6
+void iniciaVasilha(Vasilha *vasilha, Ingrediente ingrediente);
 
-static int qtdBancadasAtv = 0; //quantidade de bancadas ativas
+
+#endif // VASILHA_H
