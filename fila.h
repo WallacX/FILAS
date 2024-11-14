@@ -18,7 +18,6 @@ typedef struct{
 
 
 
-
 int retornaIndiceMenorFila(Fila filas[]);
 
 void enfileiraUsuario(Usuario *usuario, Fila *fila);
