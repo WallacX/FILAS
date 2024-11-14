@@ -1,10 +1,15 @@
 #include "bancada.h"
+#include "usuario.h"
 
-void iniciarBancadas(Bancada *bancada){
-    for(int i = 0; i <= QTDMAXSERVENTEBANCADA; i++){
-        bancada->vasilha[i] = NULL;
-    }
+int qtdBancadasAtivas = 0;
 
-void ativarBancada(Bancada *bancada, int identificador);
 
-void desativarBancada(Bancada *bancada, int identificador);
+void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){
+    bancada->identificador = ++qtdBancadasAtivas;
+    bancada->qtdUsuariosAtendidos = 0;
+    bancada->usuario = NULL;
+    
+    for(int i = 0; i < TAMCARDAPIO; i++)
+        iniciaVasilha(&bancada->vasilhas[i], cardapio[i]);
+
+}
