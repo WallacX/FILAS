@@ -1,5 +1,0 @@
-#include "ingrediente.h"
-#include "usuario.h"
-#include "vasilha.h"
-#include "servente.h"
-#include "bancada.h"
