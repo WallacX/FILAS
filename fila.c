@@ -1,11 +1,11 @@
 #include "fila.h"
 
-
 void iniciaFila(Fila *fila){
     fila->primeiro = NULL;
     fila->ultimo = NULL;
     fila->tamanho = 0;
 }
+
 
 int retornaIndiceMenorFila(Fila filas[]){
     int menorTamanho = 999;
@@ -25,6 +25,7 @@ int retornaIndiceMenorFila(Fila filas[]){
     }
     return indiceMenorTamanho;
 }
+
 
 void enfileiraUsuario(Usuario *usuario, Fila *fila){
     No *aux = (No*)malloc(sizeof(No));
@@ -48,6 +49,7 @@ void enfileiraUsuario(Usuario *usuario, Fila *fila){
     
     fila->tamanho++;
 }
+
 
 bool filaVazia(Fila *fila){
     if(fila->tamanho == 0)
