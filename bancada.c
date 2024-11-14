@@ -3,7 +3,6 @@
 
 int qtdBancadasAtivas = 0;
 
-
 void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){
     bancada->identificador = ++qtdBancadasAtivas;
     bancada->qtdUsuariosAtendidos = 0;
