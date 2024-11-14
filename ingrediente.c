@@ -1,10 +1,10 @@
 #include "ingrediente.h"
 
-const char *todosIngredientes[] = {
+cons
+t char *todosIngredientes[] = {
     "Arroz", "Feijao", "Carne", "Salada", "Macarrao", "Frango",
     "Peixe", "Legumes", "Batata", "Ovo", "Sopa", "Fruta"
 };
-
 
 void criaCardapio(Ingrediente cardapio[]){
 
@@ -25,7 +25,6 @@ void criaCardapio(Ingrediente cardapio[]){
     }
 }
 
-
 Ingrediente criaIngrediente(int grauAceit, const char nome[]){
     Ingrediente novoIngrediente;
     novoIngrediente.grauAceitacao = grauAceit;
@@ -35,10 +34,10 @@ Ingrediente criaIngrediente(int grauAceit, const char nome[]){
     return novoIngrediente;
 }
 
-
 void imprimeCardapio(Ingrediente cardapio[]){
     printf("Cardapio do dia:\n");
     for(int i = 0; i < TAMCARDAPIO; i++){
         printf("Ingrediente: %s, Grau de Aceitacao: %d\n", cardapio[i].nome, cardapio[i].grauAceitacao);
     }
 }
+
