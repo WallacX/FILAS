@@ -5,6 +5,7 @@ const char *todosIngredientes[] = {
     "Peixe", "Legumes", "Batata", "Ovo", "Sopa", "Fruta"
 };
 
+
 void criaCardapio(Ingrediente cardapio[]){
 
     int indicesUsados[TOTALINGREDIENTES] = {0};
@@ -23,6 +24,7 @@ void criaCardapio(Ingrediente cardapio[]){
         cardapio[i] = criaIngrediente(grauAceitacao, todosIngredientes[indiceAleatorio]); //cria e add ingrediente ao cardapio
     }
 }
+
 
 Ingrediente criaIngrediente(int grauAceit, const char nome[]){
     Ingrediente novoIngrediente;
