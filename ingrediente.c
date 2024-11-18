@@ -1,7 +1,6 @@
 #include "ingrediente.h"
 
-cons
-t char *todosIngredientes[] = {
+const char *todosIngredientes[] = {
     "Arroz", "Feijao", "Carne", "Salada", "Macarrao", "Frango",
     "Peixe", "Legumes", "Batata", "Ovo", "Sopa", "Fruta"
 };
