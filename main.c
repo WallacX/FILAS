@@ -1,9 +1,10 @@
-// gcc main.c bancada.c vasilha.c ingrediente.c usuario.c fila.c -o programa
+// gcc main.c bancada.c vasilha.c ingrediente.c usuario.c fila.c servente.c -o programa
 // ./programa
 
 #include <stdio.h>
-#include "bancada.h"
+#include "servente.h" 
 #include "fila.h"
+
 
 
 int main(){
@@ -14,6 +15,13 @@ int main(){
     Bancada bancadas[QTDMAXBANCADAS];
 
     Fila filas[MAXIMODEFILAS];
+    Servente serventes[QTDMAXSERVENTES];
+
+
+    for(int i = 0; i < QTDMAXSERVENTES; i++){
+        iniciaServente(&serventes[i], i+1);
+        printf("Servente: %d T: %d\n", serventes[i].id, serventes[i].tempoAtendimento);
+    }
 
     for(int i = 0; i < QTDMAXBANCADAS; i++){
         iniciaBancada(&bancadas[i], cardapio);
@@ -27,7 +35,7 @@ int main(){
     for(int i = 1; i <= 13; i++){
         Usuario user;
         iniciaUsuario(&user, cardapio);
-        printf("Usuario ~ id: %d  igd1: %d  igd2: %d igd3: %d igd4: %d igd5: %d igd6: %dVeg: %s\n", user.id, user.aceitacao[0],user.aceitacao[1], user.aceitacao[2], user.aceitacao[3],user.aceitacao[4], user.aceitacao[5], user.vegetariano ? "true" : "false");
+        printf("Id: %d ~ igd1: %d  igd2: %d igd3: %d igd4: %d igd5: %d igd6: %dVeg: %s\n", user.id, user.aceitacao[0],user.aceitacao[1], user.aceitacao[2], user.aceitacao[3],user.aceitacao[4], user.aceitacao[5], user.vegetariano ? "true" : "false");
         enfileiraUsuario(&user, &filas[retornaIndiceMenorFila(filas)]);
     }
 
@@ -36,7 +44,5 @@ int main(){
     }
     
 
-    //printf("\n Usuario ~ id: %d  aceitigd1: %d  aceitigd2: %d  Veg: %s\n", u1.id, u1.aceitacao[0], u1.aceitacao[5], u1.vegetariano ? "true" : "false");
-    
     return 0;
 }
