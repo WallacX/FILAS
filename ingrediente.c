@@ -6,7 +6,6 @@ const char *todosIngredientes[] = {
 };
 
 void criaCardapio(Ingrediente cardapio[]){
-
     int indicesUsados[TOTALINGREDIENTES] = {0};
 
     for(int i = 0; i < TAMCARDAPIO; i++){
@@ -39,4 +38,3 @@ void imprimeCardapio(Ingrediente cardapio[]){
         printf("Ingrediente: %s, Grau de Aceitacao: %d\n", cardapio[i].nome, cardapio[i].grauAceitacao);
     }
 }
-
