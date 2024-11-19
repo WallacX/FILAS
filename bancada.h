@@ -23,9 +23,7 @@ typedef struct Bancada{
 }Bancada;
 
 
-
 void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]);
-
 
 
 #endif // BANCADA_H

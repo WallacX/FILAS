@@ -1,8 +1,7 @@
 #include "bancada.h"
-
+#include "usuario.h"
 
 int qtdBancadasAtivas = 0;
-
 
 void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){
     bancada->identificador = ++qtdBancadasAtivas;
