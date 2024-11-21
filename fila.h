@@ -2,6 +2,8 @@
 #define FILA_H
 
 #include "usuario.h"
+#include "bancada.h"
+#include "servente.h"
 
 #define MAXIMODEFILAS 5
 
@@ -26,5 +28,12 @@ void iniciaFila(Fila *fila);
 
 bool filaVazia(Fila *fila);
 
+Fila* sorteiaFila(Fila *filas);
+
+Usuario desenfileiraUsuario(Fila *fila);
+
+void serveUsuario(Fila *filas, Bancada *bancadas, Servente *serventes);
+
+int sorteiaQtdServida(int qtdMax, int qtdMin); 
 
 #endif // FILA_H
