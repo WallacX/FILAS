@@ -14,6 +14,23 @@ void iniciaServente(Servente *servente, int id){
 }
 
 
-void posicionaServente(Bancada *bancada, Servente *servente){
-    servente->bancada = bancada;
+void posicionaServente(Bancada *bancada, Servente serventes[]){
+    for(int i = 0; i < QTDMAXSERVENTES; i++){
+        if(serventes[i].bancada == NULL && serventes[i].tempoDescansado >= 30){
+            serventes[i].bancada = bancada;
+
+
+            /*int aux = 0;
+            for(int j = 0; j < TAMCARDAPIO; j++){
+                
+                if(bancada->vasilhas[j].idServente == -1){
+                    bancada->vasilhas[j].idServente = serventes[i].id;
+                    
+                }
+                    
+            }*/
+            
+            break;
+        }
+    }
 }
