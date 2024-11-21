@@ -18,6 +18,6 @@ typedef struct{
 
 void iniciaServente(Servente *servente, int id);
 
-void posicionaServente(Bancada *bancada, Servente *servente);
+void posicionaServente(Bancada *bancada, Servente serventes[]);
 
 #endif // SERVENTE_H
