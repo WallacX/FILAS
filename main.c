@@ -33,10 +33,10 @@ int main(){
 
     
     for(int i = 1; i <= 13; i++){
-        Usuario user;
-        iniciaUsuario(&user, cardapio);
-        printf("Id: %d ~ igd1: %d  igd2: %d igd3: %d igd4: %d igd5: %d igd6: %dVeg: %s\n", user.id, user.aceitacao[0],user.aceitacao[1], user.aceitacao[2], user.aceitacao[3],user.aceitacao[4], user.aceitacao[5], user.vegetariano ? "true" : "false");
-        enfileiraUsuario(&user, &filas[retornaIndiceMenorFila(filas)]);
+        Usuario *user = (Usuario *)malloc(sizeof(Usuario));
+        iniciaUsuario(user, cardapio);
+        printf("Id: %d ~ igd1: %d  igd2: %d igd3: %d igd4: %d igd5: %d igd6: %dVeg: %s\n", user->id, user->aceitacao[0], user->aceitacao[1], user->aceitacao[2], user->aceitacao[3],user->aceitacao[4], user->aceitacao[5], user->vegetariano ? "true" : "false");
+        enfileiraUsuario(user, &filas[retornaIndiceMenorFila(filas)]);
     }
 
     for(int i = 0; i < 5; i++){
