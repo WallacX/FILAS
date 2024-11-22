@@ -20,4 +20,6 @@ void iniciaServente(Servente *servente, int id);
 
 void posicionaServente(Bancada *bancada, Servente serventes[]);
 
+int retornaIdServenteDescansado(Servente serventes[]);
+
 #endif // SERVENTE_H
