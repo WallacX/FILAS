@@ -1,4 +1,5 @@
 #include "servente.h"
+#include <stdbool.h>
 
 #define QTDMINSERVERNTES 3
 #define QTDMAXSERVENTES 36
