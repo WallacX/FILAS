@@ -2,9 +2,11 @@
 #define SERVENTE_H
 
 #include "bancada.h"
+#include <stdbool.h>
 
 #define QTDMINSERVERNTES 3
 #define QTDMAXSERVENTES 36
+#define TEMPSERVMAX 60 
 
 
 typedef struct{
@@ -19,5 +21,7 @@ typedef struct{
 void iniciaServente(Servente *servente, int id);
 
 void posicionaServente(Bancada *bancada, Servente *servente);
+
+bool serventeTempoTrabalhoMax(Servente *servente);
 
 #endif // SERVENTE_H
