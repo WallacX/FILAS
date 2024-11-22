@@ -7,7 +7,6 @@
 #define CAPACIDADE_INGREDIENTE 10000
 #define TEMPO_SUBSTITUICAO 3
 
-
 typedef struct Vasilha{
     Ingrediente ingrediente;
     int qtdRestante;
@@ -16,6 +15,5 @@ typedef struct Vasilha{
 void iniciaVasilha(Vasilha *vasilha, Ingrediente ingrediente);
 
 bool qtdIngredienteSuficiente(Vasilha *vasilha);
-
 
 #endif // VASILHA_H
