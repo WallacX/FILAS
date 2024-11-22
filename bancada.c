@@ -1,31 +1,21 @@
-#ifndef BANCADA_H
-#define BANCADA_H
+#include "bancada.h"
 
-#include <stdio.h>
-#include "vasilha.h"
-#include "usuario.h"
+int qtdBancadasAtivas = 0;
 
-#define QTDMINBANCADAS 2
-#define QTDMAXBANCADAS 4
-#define QTDMINSERVENTEBANCADA 3       
-#define QTDMAXSERVENTEBANCADA 6
+// Podemos trocar o nome da função para ativa bancada, e ao inves de um 
+//identificador(dentro da struct) podemos deixar um bool pra saber se a bancada está ativa ou não
 
+void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){
+    bancada->identificador = qtdBancadasAtivas++;  
+    bancada->qtdUsuariosAtendidos = 0;
+    bancada->qtdServentesBancada = 0;
+    bancada->usuario = NULL;
 
-extern int qtdBancadasAtivas;
+    for(int i = 0; i < TAMCARDAPIO; i++){
+        bancada->idServentes[i] = -1;
+    }
+    
+    for(int i = 0; i < TAMCARDAPIO; i++)
+        iniciaVasilha(&bancada->vasilhas[i], cardapio[i]);
 
-
-typedef struct Bancada{
-    int identificador;
-    int qtdUsuariosAtendidos;
-    int qtdServenteNaBancada;
-    Vasilha vasilhas[TAMCARDAPIO];
-    int idServentes[TAMCARDAPIO];
-    //podemos fazer dentro da struct ou ent um vetor global contando que vai somar o tempo dos atendentes
-    Usuario *usuario;
-}Bancada;
-
-
-void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]);
-
-
-#endif // BANCADA_H
+}
