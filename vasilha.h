@@ -2,6 +2,7 @@
 #define VASILHA_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "ingrediente.h"
 
 #define CAPACIDADE_INGREDIENTE 10000
@@ -15,5 +16,6 @@ typedef struct Vasilha{
 
 void iniciaVasilha(Vasilha *vasilha, Ingrediente ingrediente);
 
+bool qtdIngredienteSuficiente(Vasilha *vasilha);
 
 #endif // VASILHA_H
