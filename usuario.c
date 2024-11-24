@@ -11,7 +11,7 @@ void iniciaUsuario(Usuario *usuario, Ingrediente cardapio[]){
     //define se o usuario será vegetariano ou não.
     int veg = 0;
     veg = rand()%101;
-    printf("veg = %d\n", veg);
+    //printf("veg = %d\n", veg);
     if(veg > 80)
         usuario->vegetariano = true;
     else

@@ -18,7 +18,7 @@ typedef struct{
     int tamanho;
 }Fila;
 
-
+void checaVasilhas(Bancada *bancada);
 
 int retornaIndiceMenorFila(Fila filas[]);
 
@@ -40,5 +40,13 @@ void serveUsuario(Bancada *bancada, Servente serventes[]);
 Bancada *selecionaBancadaVazia(Bancada bancadas[]);
 
 Fila *sorteiaFila(Fila filas[]);
+
+
+
+void checaServentes(Bancada *bancada, Servente serventes[]);
+
+void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc);//Posição do servente na bancada
+
+
 
 #endif // FILA_H

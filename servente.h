@@ -6,8 +6,6 @@
 #define QTDMINSERVERNTES 3
 #define QTDMAXSERVENTES 36
 
-extern int totalIngredientesConsumidos[6];
-
 typedef struct{
     int id;
     int qtdUsuariosAtendidos;

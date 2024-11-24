@@ -7,7 +7,7 @@
 #include "usuario.h"
 
 #define QTDMINBANCADAS 2
-#define QTDMAXBANCADAS 5
+#define QTDMAXBANCADAS 4
 #define QTDMINSERVENTEBANCADA 3       
 #define QTDMAXSERVENTEBANCADA 6
 

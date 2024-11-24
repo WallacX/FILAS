@@ -48,7 +48,7 @@ void posicionaServente(Bancada *bancada, Servente serventes[]){
         bancada->qtdServentesBancada++;
         serventes[idServente].bancada = bancada;
         serventes[idServente].tempoDescansado = 0;
-        printf("QTD serventes na bancada: %d\n", bancada->qtdServentesBancada);
+        //printf("QTD serventes na bancada: %d\n", bancada->qtdServentesBancada);
 
     }else
         printf("Nao foi possivel posicionar o servente na bancada!\n");
@@ -58,7 +58,7 @@ void posicionaServente(Bancada *bancada, Servente serventes[]){
 
 int retornaIdServenteDescansado(Servente serventes[]){
     for(int i = 0; i <QTDMAXSERVENTES; i++){
-        if(serventes[i].tempoDescansado >= 30)
+        if(serventes[i].tempoDescansado >= 30 && serventes[i].bancada == NULL && serventes[i].tempoTrabalhado < 60)
             return serventes[i].id;    
     }
     printf("Todos os serventes estao cansados\n");
