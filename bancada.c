@@ -10,6 +10,7 @@ void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){
     bancada->qtdUsuariosAtendidos = 0;
     bancada->qtdServentesBancada = 0;
     bancada->usuario = NULL;
+    //bancada->ativa = true;
 
     for(int i = 0; i < TAMCARDAPIO; i++){
         bancada->idServentes[i] = -1;

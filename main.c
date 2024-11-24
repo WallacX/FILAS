@@ -62,5 +62,20 @@ int main(){
     }
     
     printf("Qtd bancadas ativas: %d\n", qtdBancadasAtivas);
+
+    int cont = 0;
+    while(qtdUsuariosNasFilas > 0){
+        printf("While Cont = %d\n", cont);
+        desenfileiraUsuario(filas, bancadas, serventes);
+        cont++;        
+    }
+    printf("While Cont = %d\n", cont);
+
+    printf("\n\n");
+    for(int i = 0; i < TAMCARDAPIO; i++){
+        printf("Qtd do igd %d consumida: %d gramas\n", i, totalIngredientesConsumidos[i]);
+    }
+    
+
     return 0;
 }

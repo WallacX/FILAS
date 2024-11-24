@@ -2,6 +2,7 @@
 #define BANCADA_H
 
 #include <stdio.h>
+//#include <stdbool.h>
 #include "vasilha.h"
 #include "usuario.h"
 
@@ -18,6 +19,7 @@ typedef struct Bancada{
     int identificador;
     int qtdUsuariosAtendidos;
     int qtdServentesBancada;
+    //bool ativa;
     int idServentes[TAMCARDAPIO];
     Vasilha vasilhas[TAMCARDAPIO];
     Usuario *usuario;

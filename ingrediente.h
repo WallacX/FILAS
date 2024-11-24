@@ -10,6 +10,24 @@
 #define TAMCARDAPIO 6
 #define TOTALINGREDIENTES 12
 
+
+extern int totalIngredientesConsumidos[6];
+extern const int QTDMAXINGREDIENTES[6];
+extern const int QTDMININGREDIENTES[6];
+
+#define QTD_MIN_INGREDIENTE_1 20
+#define QTD_MAX_INGREDIENTE_1 200
+#define QTD_MIN_INGREDIENTE_2 20
+#define QTD_MAX_INGREDIENTE_2 200
+#define QTD_MIN_INGREDIENTE_3 20
+#define QTD_MAX_INGREDIENTE_3 150
+#define QTD_MIN_INGREDIENTE_4 100
+#define QTD_MAX_INGREDIENTE_4 200
+#define QTD_MIN_INGREDIENTE_5 10
+#define QTD_MAX_INGREDIENTE_5 100
+#define QTD_MIN_INGREDIENTE_6 50
+#define QTD_MAX_INGREDIENTE_6 250
+
 typedef struct Ingrediente{
     int grauAceitacao ;
     char nome[TAMMAXNOMEINGREDIENTE];

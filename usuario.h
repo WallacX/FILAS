@@ -13,7 +13,7 @@
 
 
 extern int qtdTotalUsuarios;
-
+extern int qtdUsuariosNasFilas;
 
 typedef struct{
     int id;

@@ -1,6 +1,7 @@
 #include "usuario.h"
 
 int qtdTotalUsuarios = 0;
+int qtdUsuariosNasFilas = 0;
 
 
 void iniciaUsuario(Usuario *usuario, Ingrediente cardapio[]){
