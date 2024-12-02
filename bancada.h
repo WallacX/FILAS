@@ -5,8 +5,8 @@
 #include "vasilha.h"
 #include "usuario.h"
 
-#define QTDMINBANCADAS 2
-#define QTDMAXBANCADAS 4
+
+#define QTDBANCADAS 5
 #define QTDMINSERVENTEBANCADA 3       
 #define QTDMAXSERVENTEBANCADA 6
 
@@ -23,5 +23,6 @@ typedef struct Bancada{
 
 void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]);
 
+void checaVasilhas(Bancada bancadas[]);
 
 #endif // BANCADA_H
