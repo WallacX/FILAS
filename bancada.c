@@ -15,3 +15,11 @@ void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){
 
 }
 
+void checaVasilhas(Bancada bancadas[]){
+    for(int i = 0; i < QTDBANCADAS; i++){
+        for(int j = 0; j < TAMCARDAPIO; j++){
+            if(bancadas[i].vasilhas[j].qtdRestante < QTDMAXINGREDIENTES[j])
+                bancadas[i].vasilhas[j].qtdRestante = CAPACIDADE_INGREDIENTE;
+        }
+    }
+}
