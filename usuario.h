@@ -9,7 +9,7 @@
 #include "ingrediente.h"
 
 
-#define MAXUSUARIOSGERADOSPORSEGUNDO 3
+#define MAXUSUARIOSGERADOSPORSEGUNDO 2
 
 
 extern int qtdTotalUsuarios;
@@ -19,10 +19,11 @@ typedef struct{
     int id;
     bool vegetariano;
     bool aceitacao[TAMCARDAPIO];
+    int tempo;
 }Usuario;
 
 
-void iniciaUsuario(Usuario *usuario, Ingrediente cardapio[]);
+Usuario *geraUsuario(Ingrediente cardapio[]);
 
 
 #endif // USUARIO_H

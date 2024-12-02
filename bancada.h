@@ -2,7 +2,6 @@
 #define BANCADA_H
 
 #include <stdio.h>
-//#include <stdbool.h>
 #include "vasilha.h"
 #include "usuario.h"
 
@@ -12,17 +11,13 @@
 #define QTDMAXSERVENTEBANCADA 6
 
 
-extern int qtdBancadasAtivas;
-
-
 typedef struct Bancada{
-    int identificador;
     int qtdUsuariosAtendidos;
     int qtdServentesBancada;
-    //bool ativa;
     int idServentes[TAMCARDAPIO];
     Vasilha vasilhas[TAMCARDAPIO];
     Usuario *usuario;
+    int tempoTotalServentes;
 }Bancada;
 
 

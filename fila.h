@@ -5,7 +5,7 @@
 #include "servente.h"
 #include "bancada.h"
 
-#define MAXIMODEFILAS 5
+#define QTDMAXDEFILAS 5
 
 typedef struct No{
     Usuario *usuario;
@@ -16,37 +16,31 @@ typedef struct{
     No *primeiro;
     No *ultimo;
     int tamanho;
+    int qtdTotalDeUsuarios;
+    int tempoDeEsperaTotal;
 }Fila;
+
+
+void iniciaFila(Fila *fila);
+bool filaVazia(Fila *fila);
+
+void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]);
+void controlaTempoUsuariosNasFilas(Fila filas[]);
+Fila *retornaMenorFila(Fila filas[]);
+
+void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]);
+Fila *sorteiaFila(Fila filas[]);
+
+void serveUsuarios(Bancada bancadas[]);
+
+void checaServentes(Bancada *bancada, Servente serventes[]);
+void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc);//Posição do servente na bancada
 
 void checaVasilhas(Bancada *bancada);
 
-int retornaIndiceMenorFila(Fila filas[]);
-
-void enfileiraUsuario(Usuario *usuario, Fila *fila);
-
-void iniciaFila(Fila *fila);
-
-bool filaVazia(Fila *fila);
 
 
 
-void desenfileiraUsuario(Fila filas[], Bancada bancadas[], Servente serventes[]);
-
-void posicionaUsuarioNaBancada(Usuario *usuario, Bancada bancadas[], Servente serventes[]);
-
-void serveUsuario(Bancada *bancada, Servente serventes[]);
-
-//Mover essa função pro arquivo de bancadas caso possivel
-Bancada *selecionaBancadaVazia(Bancada bancadas[]);
-
-Fila *sorteiaFila(Fila filas[]);
-
-
-
-void checaServentes(Bancada *bancada, Servente serventes[]);
-
-void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc);//Posição do servente na bancada
-
-
+void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
 
 #endif // FILA_H

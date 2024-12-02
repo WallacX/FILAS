@@ -4,14 +4,12 @@ int qtdTotalUsuarios = 0;
 int qtdUsuariosNasFilas = 0;
 
 
-void iniciaUsuario(Usuario *usuario, Ingrediente cardapio[]){
-
+Usuario *geraUsuario(Ingrediente cardapio[]){
+    Usuario *usuario = (Usuario *)malloc(sizeof(Usuario));
 
     usuario->id = ++qtdTotalUsuarios;
     //define se o usuario será vegetariano ou não.
-    int veg = 0;
-    veg = rand()%101;
-    //printf("veg = %d\n", veg);
+    int veg = rand()%101;
     if(veg > 80)
         usuario->vegetariano = true;
     else
@@ -26,4 +24,8 @@ void iniciaUsuario(Usuario *usuario, Ingrediente cardapio[]){
         else
             usuario->aceitacao[i] = false;
     }
+
+    usuario->tempo = 0;
+
+    return usuario;
 }

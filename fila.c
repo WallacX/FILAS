@@ -4,49 +4,8 @@ void iniciaFila(Fila *fila){
     fila->primeiro = NULL;
     fila->ultimo = NULL;
     fila->tamanho = 0;
-}
-
-int retornaIndiceMenorFila(Fila filas[]){
-    int menorTamanho = 999;
-    int indiceMenorTamanho = -1;
-
-    for(int i = 0; i< MAXIMODEFILAS; i++){
-        if(filas[i].tamanho == 0){
-            indiceMenorTamanho = i;
-            break;
-        }
-        else{
-            if(filas[i].tamanho < menorTamanho){
-                menorTamanho = filas[i].tamanho;
-                indiceMenorTamanho = i;
-            }
-        }
-    }
-    return indiceMenorTamanho;
-}
-
-void enfileiraUsuario(Usuario *usuario, Fila *fila){
-    No *aux = (No*)malloc(sizeof(No));
-
-    if(aux == NULL){
-        printf("Erro ao alocar memoria!\n");
-        return;
-    }
-
-    aux->usuario = usuario;
-    aux->proximo = NULL;
-
-    if(filaVazia(fila)){
-        fila->primeiro = aux;
-        fila->ultimo = aux;
-    }
-    else{
-        fila->ultimo->proximo = aux;
-        fila->ultimo = aux;
-    }
-    
-    fila->tamanho++;
-    qtdUsuariosNasFilas++;
+    fila->qtdTotalDeUsuarios = 0;
+    fila->tempoDeEsperaTotal = 0;
 }
 
 bool filaVazia(Fila *fila){
@@ -58,43 +17,137 @@ bool filaVazia(Fila *fila){
 
 
 
-void serveUsuario(Bancada *bancada, Servente serventes[]){
-    int qtdComidaServida;
-    for(int i = 0; i < TAMCARDAPIO; i++){
-        if(bancada->usuario->aceitacao[i] == true){
-            //trecho q vai 'travar' o usuario pelo tempo do servente em vasilha[i]
-            qtdComidaServida = QTDMININGREDIENTES[i] + (rand() % (QTDMAXINGREDIENTES[i] - QTDMININGREDIENTES[i]) + 1);
-            bancada->vasilhas[i].qtdRestante -= qtdComidaServida;
-            totalIngredientesConsumidos[i] += qtdComidaServida;
 
-            /*printf("\nO usuario %d serviu-se de %d gramas de %s Restam %d gramas na vasilha.", 
-        bancada->usuario->id, qtdComidaServida, bancada->vasilhas[i].ingrediente.nome,
-        bancada->vasilhas[i].qtdRestante);*/
+
+void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]){
+    controlaTempoUsuariosNasFilas(filas); // os usuarios que estão nas filas
+
+    int qtd = rand() % MAXUSUARIOSGERADOSPORSEGUNDO;
+    //printf("Qtd usuarios gerados %d\n", qtd);
+    int cont = 0;
+    while(cont < qtd){
+        Usuario *usuario = geraUsuario(cardapio);
+        Fila *fila = retornaMenorFila(filas);
+
+        No *aux = (No*)malloc(sizeof(No));
+        if(aux == NULL){
+        printf("Erro ao alocar memoria!\n");
+        return;
         }
+
+        aux->usuario = usuario;
+        aux->proximo = NULL;
+
+        if(filaVazia(fila)){
+            fila->primeiro = aux;
+            fila->ultimo = aux;
+        }
+        else{
+            fila->ultimo->proximo = aux;
+            fila->ultimo = aux;
+        }
+        
+        fila->tamanho++;
+        fila->qtdTotalDeUsuarios++;
+        qtdUsuariosNasFilas++;
+
+        cont++;
     }
-    free(bancada->usuario);
-    bancada->usuario = NULL;
-    bancada->qtdUsuariosAtendidos++;
-    //acrescentar o tempo de cada servente nessa função
-    checaServentes(bancada, serventes);
-    checaVasilhas(bancada);
 }
 
-void checaVasilhas(Bancada *bancada){
-    for(int i = 0; i < TAMCARDAPIO; i++){
-        if(bancada->vasilhas[i].qtdRestante < QTDMAXINGREDIENTES[i]){
-            //trecho que vai 'travar' o codigo durante o tempo da troca
-            bancada->vasilhas[i].qtdRestante = CAPACIDADE_INGREDIENTE;
+void controlaTempoUsuariosNasFilas(Fila filas[]){//Adiciona o tam da fila a quantidade de espera total, variável que será utilizada no relatório
+    for(int i = 0; i<QTDMAXDEFILAS; i++){
+        filas[i].tempoDeEsperaTotal += filas[i].tamanho;
+    }
+}
+
+Fila *retornaMenorFila(Fila filas[]){
+    int menorTamanho = 999;
+    int indiceMenorTamanho = -1;
+
+    for(int i = 0; i< QTDMAXDEFILAS; i++){
+        if(filas[i].tamanho == 0){
+            indiceMenorTamanho = i;
+            break;
+        }
+        else{
+            if(filas[i].tamanho < menorTamanho){
+                menorTamanho = filas[i].tamanho;
+                indiceMenorTamanho = i;
+            }
         }
     }
-
+    return &filas[indiceMenorTamanho];
 }
 
 
-void checaServentes(Bancada *bancada, Servente serventes[]){
-    for(int i = 0; i < TAMCARDAPIO; i++){
-        if(serventes[bancada->idServentes[i]].tempoTrabalhado >= 60){
-            trocaServente(bancada, serventes, i);
+void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]){
+        for(int i = 0; i < QTDMAXBANCADAS; i++){
+            if(qtdUsuariosNasFilas > 0){
+                if(bancadas[i].usuario == NULL){
+                    Fila *filaSorteada = sorteiaFila(filas);
+                    No *noAux = filaSorteada->primeiro;
+                    Usuario *usuario = noAux->usuario;
+                    filaSorteada->primeiro = noAux->proximo;
+                    filaSorteada->tamanho--;
+                    qtdUsuariosNasFilas--;
+                    free(noAux);
+                    bancadas[i].usuario = usuario;
+            }
+        }
+    }
+}
+
+Fila *sorteiaFila(Fila filas[]){
+    Fila *filaSorteada;
+    do{
+        filaSorteada = &filas[rand() % QTDMAXDEFILAS];
+    }while(filaVazia(filaSorteada));
+    return filaSorteada;
+}
+
+
+void serveUsuarios(Bancada bancadas[]){
+    for(int i = 0; i < QTDMAXBANCADAS; i++){
+        if(bancadas[i].usuario != NULL){
+            bancadas[i].usuario->tempo++;
+
+            if(bancadas[i].usuario->tempo >= bancadas[i].tempoTotalServentes){
+                int qtdComidaServida;
+
+                for(int j = 0; j < TAMCARDAPIO; j++){
+                    if(bancadas[i].usuario->aceitacao[j] == true){
+                        qtdComidaServida = QTDMININGREDIENTES[i] + (rand() % (QTDMAXINGREDIENTES[i] - QTDMININGREDIENTES[i]) + 1);
+                        bancadas[i].vasilhas[j].qtdRestante -= qtdComidaServida;
+                        totalIngredientesConsumidos[j] += qtdComidaServida;
+                    }
+                }
+
+                free(bancadas[i].usuario);
+                bancadas[i].usuario = NULL;
+                bancadas[i].qtdUsuariosAtendidos++;
+
+            }
+        }
+    }
+}
+
+
+
+void checaServentes(Bancada bancadas[], Servente serventes[]){
+    for(int i = 0; i < QTDMAXSERVENTES; i++){
+        if(serventes->bancada != NULL)
+            serventes[i].tempoTrabalhado++;
+        else
+            serventes[i].tempoDescansado++;
+    }
+
+
+    for(int i = 0; i < QTDMAXBANCADAS; i++){
+        for(int j = 0; j < QTDMAXSERVENTEBANCADA; j++){
+            if(serventes[bancadas[i].idServentes[j]].tempoTrabalhado >= 60){
+                trocaServente(&bancadas[i], serventes, j);
+            }
         }
     }
 }
@@ -139,6 +192,8 @@ void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Po
     
     int aux = retornaIdServenteDescansado(serventes);
     serventes[aux].bancada = bancada;
+    serventes[aux].tempoDescansado = 0;
+    serventes[aux].tempoTrabalhado = 0;
     for(int i = 0; i < TAMCARDAPIO; i++){
         if(bancada->idServentes[i] == -1){
             bancada->idServentes[i] = aux;
@@ -146,78 +201,40 @@ void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Po
     }
 }
 
-
-Fila *sorteiaFila(Fila filas[]){
-    Fila *filaSorteada;
-    do{
-        filaSorteada = &filas[rand() % MAXIMODEFILAS];
-
-    }while(filaVazia(filaSorteada));
-    return filaSorteada;
-}
-
-Bancada *selecionaBancadaVazia(Bancada bancadas[]){
-    int aux;
-    do{
-        aux = rand() % qtdBancadasAtivas + 1;
-        if(bancadas[aux].usuario == NULL)
-            return &bancadas[aux];
-
-        /*
-        for(int i = 2; i<qtdBancadasAtivas; i++){
-            if(bancadas[i].usuario == NULL)
-                return &bancadas[i];
+void checaVasilhas(Bancada bancadas[]){
+    for(int i = 0; i < QTDMAXBANCADAS; i++){
+        for(int j = 0; j < TAMCARDAPIO; j++){
+            if(bancadas[i].vasilhas[j].qtdRestante < QTDMAXINGREDIENTES[j])
+                bancadas[i].vasilhas[j].qtdRestante = CAPACIDADE_INGREDIENTE;
         }
-        */
-        
-    }while(1);
-
-}
-
-
-void posicionaUsuarioNaBancada(Usuario *usuario, Bancada bancadas[], Servente serventes[]){
-    bool vazia = false;
-    if(usuario->vegetariano == true){
-
-        do{
-            if(bancadas[0].usuario == NULL){
-                vazia = true;
-            }
-        }while(!(vazia));
-
-
-        //printf("O usuario %d foi inserido na bancada 0\n", usuario->id);
-        bancadas[0].usuario = usuario;
-        serveUsuario(&bancadas[0], serventes); 
-
-    }else{
-        Bancada *bancadaSelecionada = selecionaBancadaVazia(bancadas);
-        
-        bancadaSelecionada->usuario = usuario;
-        printf("O usuario %d foi inserido na bancada %d\n", usuario->id, bancadaSelecionada->identificador);
-        serveUsuario(bancadaSelecionada, serventes);
     }
 }
 
 
-//Mover essa função pro arquivo de bancadas caso possivel
 
-void desenfileiraUsuario(Fila filas[], Bancada bancadas[], Servente serventes[]){
-    //printf("Entrou em desenfileira\n");
-    Fila *filaSorteada = sorteiaFila(filas);
-    //printf("Tamanho da fila sorteada: %d\n", filaSorteada->tamanho);
-    No *noAux = filaSorteada->primeiro;
-    Usuario *usuario = noAux->usuario;
-    filaSorteada->primeiro = noAux->proximo;
-    filaSorteada->tamanho--;
-    qtdUsuariosNasFilas--;
 
-    if(filaSorteada->primeiro == NULL || filaSorteada->tamanho == 0){
-        filaSorteada->ultimo = NULL;
+void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
+    for(int i = 0; i < QTDMAXSERVENTES; i++){
+        iniciaServente(&serventes[i], i);
+        //***printf("Servente: %d T: %d\n", serventes[i].id, serventes[i].tempoAtendimento);
     }
 
-    free(noAux);
+    for(int i = 0; i < QTDMAXBANCADAS; i++){ //Inicia as bancadas e posiciona os serventes
+        iniciaBancada(&bancadas[i], cardapio);
 
-    posicionaUsuarioNaBancada(usuario, bancadas, serventes);
+        int cont = 0, total;
+        total = rand() % 4 + 3;
+        
+        while(cont != total){
+            posicionaServente(&bancadas[i], serventes);
+            cont++;
+            //***printf("Rand: %d Contador: %d\n", total, cont);
+        }
+        
+    }
+
+    for(int i = 0; i < QTDMAXDEFILAS; i++){
+            iniciaFila(&filas[i]);
+        }
 
 }

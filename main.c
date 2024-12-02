@@ -2,110 +2,53 @@
 // ./programa
 
 #include <stdio.h>
-#include "servente.h" 
+#include <windows.h>
 #include "fila.h"
-
-
 
 int main(){
     srand(time(NULL));
-    Ingrediente cardapio[TAMCARDAPIO];
-    criaCardapio(cardapio);
-    imprimeCardapio(cardapio);
-    Bancada bancadas[QTDMAXBANCADAS];
 
-    Fila filas[MAXIMODEFILAS];
+    //
+    Ingrediente cardapio[TAMCARDAPIO];
+    criaCardapio(cardapio); 
+    Bancada bancadas[QTDMAXBANCADAS];
+    Fila filas[QTDMAXDEFILAS];
     Servente serventes[QTDMAXSERVENTES];
 
+    iniciaRU(cardapio, bancadas, filas, serventes); //Inicialização dos vetores/posicionamento dos serventes na bancada
 
-    for(int i = 0; i < QTDMAXSERVENTES; i++){
-        iniciaServente(&serventes[i], i);
-        //printf("Servente: %d T: %d\n", serventes[i].id, serventes[i].tempoAtendimento);
-    }
 
-    for(int i = 0; i < QTDMAXBANCADAS; i++){
-        iniciaBancada(&bancadas[i], cardapio);
+    //**verificar se na hora da troca do servente 
+    //as variavéis de trabalho/descanso estão sendo atualizadas corretamente
+    //Transformar retornaIdserventeDescansado em retornaServenteDescansado?**
 
-        int cont = 0, total;
-        total = rand() % 4 + 3;
+
+    //cafeDaManha();
+    int tempo = 0;
+    while(tempo < 150){
         
-        while(cont != total){
-            posicionaServente(&bancadas[i], serventes);
-            cont++;
-            //printf("Rand: %d Contador: %d\n", total, cont);
-        }
+        system("cls");
         
-    }
-    
-    for(int i = 0; i < MAXIMODEFILAS; i++){
-        iniciaFila(&filas[i]);
-    }
-
-    for(int i = 0; i<15; i++){
-        printf("Servente %d: %s\n",i , serventes[i].bancada ? "true" : "false");
-    }
-
-    for(int i = 0; i < QTDMAXBANCADAS; i++){
-        printf("Bancada %d: ", i);
-        for(int j = 0; j < TAMCARDAPIO; j++){
-            printf("%d ", bancadas[i].idServentes[j]);
+        printf("Tempo: %d\n", tempo);
+        printf("Qtd usuarios nas filas: %d\n", qtdUsuariosNasFilas);
+        for(int i = 0; i < QTDMAXDEFILAS; i++){
+            if(filas[i].tamanho != 0)
+                printf("Fila: %d Tam: %d\n", i, filas[i].tamanho);
         }
-        printf("\n");
+        printf("Tempo trabalhado servente B0V0: %d\n", serventes[bancadas[0].idServentes[0]].tempoTrabalhado);
+        printf("Tempo descanso servente 35: %d\n", serventes[35].tempoDescansado);
+
+        
+        enfileiraUsuarios(cardapio, filas); //Gera os usuarios e os enfileira
+        desenfileiraUsuarios(filas, bancadas);
+        serveUsuarios(bancadas);
+        checaServentes(bancadas, serventes);
+        checaVasilhas(bancadas);
+        printf("Total consumido de cada igrediente: %d %d %d %d %d %d\n", totalIngredientesConsumidos[0], totalIngredientesConsumidos[1], totalIngredientesConsumidos[2], totalIngredientesConsumidos[3], totalIngredientesConsumidos[4], totalIngredientesConsumidos[5]);
+        tempo++;
+        Sleep(2000);
     }
-    
-    for(int i = 1; i <= 13; i++){
-        Usuario *user = (Usuario *)malloc(sizeof(Usuario));
-        iniciaUsuario(user, cardapio);
-        //printf("Id: %d ~ igd1: %d  igd2: %d igd3: %d igd4: %d igd5: %d igd6: %d  Veg: %s\n", user->id, user->aceitacao[0], user->aceitacao[1], user->aceitacao[2], user->aceitacao[3],user->aceitacao[4], user->aceitacao[5], user->vegetariano ? "true" : "false");
-        enfileiraUsuario(user, &filas[retornaIndiceMenorFila(filas)]);
-    }
-
-    for(int i = 0; i < 5; i++){
-        //printf("Tamanho da Fila %d : %d\n", i+1, filas[i].tamanho);
-    }
-    
-    //printf("Qtd bancadas ativas: %d\n", qtdBancadasAtivas);
-
-    int cont = 0;
-    while(qtdUsuariosNasFilas > 5){
-        //printf("While Cont = %d\n", cont);
-        desenfileiraUsuario(filas, bancadas, serventes);
-        cont++;        
-    }
-    
-    serventes[0].tempoTrabalhado = 60;
-    serventes[6].tempoTrabalhado = 70;
-    serventes[8].tempoTrabalhado = 80;
-    
-
-    while(qtdUsuariosNasFilas > 0){
-        //printf("While Cont = %d\n", cont);
-        desenfileiraUsuario(filas, bancadas, serventes);
-        cont++;        
-    }
-
-    printf("While Cont = %d\n", cont);
-
-
-    for(int i = 0; i < QTDMAXBANCADAS; i++){
-        printf("Bancada %d: ", i);
-        for(int j = 0; j < TAMCARDAPIO; j++){
-            printf("%d ", bancadas[i].idServentes[j]);
-        }
-        printf("\n");
-    }
-
-
-    for(int i = 0; i<15; i++){
-        printf("Servente %d: %s\n",i , serventes[i].bancada ? "true" : "false");
-    }
-
-
-    printf("\n\n");
-    for(int i = 0; i < TAMCARDAPIO; i++){
-        //printf("Qtd do igd %d consumida: %d gramas\n", i, totalIngredientesConsumidos[i]);
-    }
-    
-
+    //while(qtdusuariosnafila > 0);    
+    //Função para deixar os serventes descansados antes de abrir pro almoço
     return 0;
 }

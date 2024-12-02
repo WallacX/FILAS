@@ -6,3 +6,4 @@ void iniciaVasilha(Vasilha *vasilha, Ingrediente ingrediente){
     vasilha->qtdRestante = CAPACIDADE_INGREDIENTE;
     //printf("Vasilha iniciada\n");
 }
+

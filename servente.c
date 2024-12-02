@@ -53,6 +53,13 @@ void posicionaServente(Bancada *bancada, Servente serventes[]){
     }else
         printf("Nao foi possivel posicionar o servente na bancada!\n");
 
+    bancada->tempoTotalServentes = 0;
+    if(bancada->qtdServentesBancada >= 3){
+        for(int i = 0; i < QTDMAXBANCADAS; i++){
+        bancada->tempoTotalServentes += serventes[bancada->idServentes[i]].tempoAtendimento;
+        }
+    }
+    
 }
 
 
