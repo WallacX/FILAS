@@ -31,16 +31,8 @@ Fila *retornaMenorFila(Fila filas[]);
 void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]);
 Fila *sorteiaFila(Fila filas[]);
 
-void serveUsuarios(Bancada bancadas[]);
-
-void checaServentes(Bancada *bancada, Servente serventes[]);
-void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc);//Posição do servente na bancada
-
-void checaVasilhas(Bancada *bancada);
-
-
-
-
 void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
+
+void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
 
 #endif // FILA_H
