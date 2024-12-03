@@ -3,7 +3,6 @@
 
 #include "bancada.h"
 
-#define QTDMINSERVERNTES 3
 #define QTDMAXSERVENTES 6 * QTDBANCADAS * 2
 #define TEMPOMAXTRABALHOSERV 60
 #define TEMPOMINDESCANSOSERV 30
@@ -24,7 +23,7 @@ void posicionaServente(Bancada *bancada, Servente serventes[]);
 void checaServentes(Bancada *bancada, Servente serventes[]);
 void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc);//Posição do servente na bancada
 
-void serveUsuarios(Bancada bancadas[]);
+void serveUsuarios(Bancada bancadas[], Servente serventes[]);
 
 
 
