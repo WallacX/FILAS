@@ -5,7 +5,7 @@
 #include "servente.h"
 #include "bancada.h"
 
-#define QTDMAXDEFILAS 5
+#define QTDFILAS 5
 
 typedef struct No{
     Usuario *usuario;
