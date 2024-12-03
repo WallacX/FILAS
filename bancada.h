@@ -6,7 +6,7 @@
 #include "usuario.h"
 
 
-#define QTDBANCADAS 5
+#define QTDBANCADAS 6
 #define QTDMINSERVENTEBANCADA 3       
 #define QTDMAXSERVENTEBANCADA 6
 
@@ -17,7 +17,7 @@ typedef struct Bancada{
     int idServentes[TAMCARDAPIO];
     Vasilha vasilhas[TAMCARDAPIO];
     Usuario *usuario;
-    int tempoTotalServentes;
+    int tempoTotalServindo;
 }Bancada;
 
 
