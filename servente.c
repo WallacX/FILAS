@@ -49,13 +49,6 @@ void posicionaServente(Bancada *bancada, Servente serventes[]){
     }else
         printf("Nao foi possivel posicionar o servente na bancada!\n");
 
-    bancada->tempoTotalServentes = 0;
-    if(bancada->qtdServentesBancada >= 3){
-        for(int i = 0; i < QTDBANCADAS; i++){
-        bancada->tempoTotalServentes += serventes[bancada->idServentes[i]].tempoAtendimento;
-        }
-    }
-    
 }
 
 
@@ -139,25 +132,40 @@ void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Po
 }
 
 
-void serveUsuarios(Bancada bancadas[]){
+void serveUsuarios(Bancada bancadas[], Servente serventes[]){
+
     for(int i = 0; i < QTDBANCADAS; i++){
+        
+
         if(bancadas[i].usuario != NULL){
+
+            int tempoUsuarioAtendido = 0; // tempo pro usuario ser atendido
+            for(int j = 0; j < TAMCARDAPIO; j++){
+                if(bancadas[i].usuario->aceitacao[j] == true){
+                    tempoUsuarioAtendido += serventes[bancadas[i].idServentes[j]].tempoAtendimento; //Varre o vetor adicionando o tempo do servente quando o usuario aceita o alimento
+                }
+            }
+
+
             bancadas[i].usuario->tempo++;
 
-            if(bancadas[i].usuario->tempo >= bancadas[i].tempoTotalServentes){
+            if(bancadas[i].usuario->tempo >= tempoUsuarioAtendido){
                 int qtdComidaServida;
 
-                for(int j = 0; j < TAMCARDAPIO; j++){
-                    if(bancadas[i].usuario->aceitacao[j] == true){
+                for(int k = 0; k < TAMCARDAPIO; k++){
+                    if(bancadas[i].usuario->aceitacao[k] == true){
                         qtdComidaServida = QTDMININGREDIENTES[i] + (rand() % (QTDMAXINGREDIENTES[i] - QTDMININGREDIENTES[i]) + 1);
-                        bancadas[i].vasilhas[j].qtdRestante -= qtdComidaServida;
-                        totalIngredientesConsumidos[j] += qtdComidaServida;
+                        bancadas[i].vasilhas[k].qtdRestante -= qtdComidaServida;
+                        totalIngredientesConsumidos[k] += qtdComidaServida;
                     }
                 }
 
                 free(bancadas[i].usuario);
                 bancadas[i].usuario = NULL;
                 bancadas[i].qtdUsuariosAtendidos++;
+                bancadas[i].tempoTotalServindo += tempoUsuarioAtendido;
+                
+
 
             }
         }
