@@ -13,7 +13,7 @@ int main(){
     Ingrediente cardapio[TAMCARDAPIO];
     criaCardapio(cardapio); 
     Bancada bancadas[QTDBANCADAS];
-    Fila filas[QTDMAXDEFILAS];
+    Fila filas[QTDFILAS];
     Servente serventes[QTDMAXSERVENTES];
 
     iniciaRU(cardapio, bancadas, filas, serventes); //Inicialização dos vetores/posicionamento dos serventes na bancada
@@ -34,7 +34,7 @@ int main(){
         
         printf("Tempo: %d\n", tempo);
         printf("Qtd usuarios nas filas: %d\n", qtdUsuariosNasFilas);
-        for(int i = 0; i < QTDMAXDEFILAS; i++){
+        for(int i = 0; i < QTDFILAS; i++){
             if(filas[i].tamanho != 0)
                 printf("Fila: %d Tam: %d\n", i, filas[i].tamanho);
         }
@@ -45,7 +45,7 @@ int main(){
 
         enfileiraUsuarios(cardapio, filas); //Gera os usuarios e os enfileira
         desenfileiraUsuarios(filas, bancadas);
-        serveUsuarios(bancadas);
+        serveUsuarios(bancadas, serventes);
         checaServentes(bancadas, serventes);
         checaVasilhas(bancadas);
         printf("Total consumido de cada igrediente: %d %d %d %d %d %d\n", totalIngredientesConsumidos[0], totalIngredientesConsumidos[1], totalIngredientesConsumidos[2], totalIngredientesConsumidos[3], totalIngredientesConsumidos[4], totalIngredientesConsumidos[5]);
@@ -60,13 +60,14 @@ int main(){
             printf("\n");
         }
         //Sleep(2000); Windows
-        if(tempo == 59|| tempo == 60|| tempo == 120 || tempo == 180 || tempo == 240)
-            sleep(5); //Linux
+        //if(tempo == 59|| tempo == 60|| tempo == 120 || tempo == 180 || tempo == 240)
+          //  sleep(5); //Linux
     }
     //while(qtdusuariosnafila > 0);    
     //Função para deixar os serventes descansados antes de abrir pro almoço
 
 
+    imprimeRelatorio(cardapio, bancadas, filas, serventes);
 
    
 
