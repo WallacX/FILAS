@@ -56,7 +56,7 @@ void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]){
 }
 
 void controlaTempoUsuariosNasFilas(Fila filas[]){//Adiciona o tam da fila a quantidade de espera total, variável que será utilizada no relatório
-    for(int i = 0; i<QTDMAXDEFILAS; i++){
+    for(int i = 0; i<QTDFILAS; i++){
         filas[i].tempoDeEsperaTotal += filas[i].tamanho;
     }
 }
@@ -65,7 +65,7 @@ Fila *retornaMenorFila(Fila filas[]){
     int menorTamanho = 999;
     int indiceMenorTamanho = -1;
 
-    for(int i = 0; i< QTDMAXDEFILAS; i++){
+    for(int i = 0; i< QTDFILAS; i++){
         if(filas[i].tamanho == 0){
             indiceMenorTamanho = i;
             break;
@@ -101,7 +101,7 @@ void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]){
 Fila *sorteiaFila(Fila filas[]){
     Fila *filaSorteada;
     do{
-        filaSorteada = &filas[rand() % QTDMAXDEFILAS];
+        filaSorteada = &filas[rand() % QTDFILAS];
     }while(filaVazia(filaSorteada));
     return filaSorteada;
 }
@@ -127,7 +127,7 @@ void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente
         
     }
 
-    for(int i = 0; i < QTDMAXDEFILAS; i++){
+    for(int i = 0; i < QTDFILAS; i++){
             iniciaFila(&filas[i]);
         }
 
@@ -135,19 +135,43 @@ void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente
 
 
 void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
+    /*
+    Ao final de cada expediente (quando o RU fechar e não existir mais usuários para serem
+atendidos), devem ser impressos relatórios com:
+○ a quantidade de usuários atendidos por cada servente e cada bancada,
+*/
+
     FILE *arquivo = fopen("Relatorio_RU.txt", "w");
     if(arquivo == NULL){
         printf("Erro ao escrever relatorio.\n");
         return;
     }
 
-    //qtdTotalUsuarios
-    //filas[i].tempoDeEsperaTotal / filas[i].qtdTotalDeUsuarios  ->tempo de espera medio de cada fila
+    fprintf(arquivo, "Quantidade Total de Usuarios: %d\n", qtdTotalUsuarios);
+
+    for(int i = 0; i < QTDFILAS; i++){
+        fprintf(arquivo, "Tempo médio de espera na fila %d: %ds\n", i+1, filas[i].tempoDeEsperaTotal / filas[i].qtdTotalDeUsuarios); 
+    }
+    fprintf(arquivo, "\n");
+    
+    for(int i = 0; i < QTDBANCADAS; i++){
+        fprintf(arquivo, "Tempo médio de espera na bancada %d: %ds\n", i+1, bancadas[i].tempoTotalServindo / bancadas[i].qtdUsuariosAtendidos);
+        fprintf(arquivo, "Quantidade de usuarios atendidos pela bancada %d: %d\n", i+1, bancadas[i].qtdUsuariosAtendidos);
+    }
+    fprintf(arquivo, "\n");
+
+    for(int i = 0; i < TAMCARDAPIO; i++){
+        fprintf(arquivo, "Quantidade de %s consumida: %dg\n", cardapio[i].nome, totalIngredientesConsumidos[i]);
+    }
+    fprintf(arquivo, "\n");
+
+
     //bancadas[i].qtdUsuariosAtendidos
     //bancadas[i].qtdUsuariosAtendidos / (bancadadas[i].tempoAtendimentoTotal) -> criar essa variavel;
 
 
     //fprintf(arquivo, "Quai")
+
 
     fclose(arquivo);
 }
