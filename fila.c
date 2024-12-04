@@ -1,5 +1,30 @@
 #include "fila.h"
 
+
+void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
+    for(int i = 0; i < QTDSERVENTES; i++){
+        iniciaServente(&serventes[i], i);
+    }
+
+    for(int i = 0; i < QTDBANCADAS; i++){ //Inicializa as bancadas
+        iniciaBancada(&bancadas[i], cardapio);
+
+        int cont = 0, total;
+        total = rand() % 4 + 3; //Gera de forma aleatoria a quantidade de serventes que estarão na posicionados na bancada
+        
+        while(cont != total){
+            posicionaServente(&bancadas[i], serventes);
+            cont++;
+        }
+        
+    }
+
+    for(int i = 0; i < QTDFILAS; i++){
+            iniciaFila(&filas[i]);
+        }
+}
+
+
 void iniciaFila(Fila *fila){
     fila->primeiro = NULL;
     fila->ultimo = NULL;
@@ -19,11 +44,10 @@ bool filaVazia(Fila *fila){
 
 
 
-void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]){
-    controlaTempoUsuariosNasFilas(filas); // os usuarios que estão nas filas
+void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]){//Gera e enfileira os usuários
+    controlaTempoUsuariosNasFilas(filas);
 
-    int qtd = rand() % MAXUSUARIOSGERADOSPORSEGUNDO;
-    //printf("Qtd usuarios gerados %d\n", qtd);
+    int qtd = rand() % MAXUSUARIOSGERADOSPORSEGUNDO; //Gera aleatoriamente a quantidade de usuarios
     int cont = 0;
     while(cont < qtd){
         Usuario *usuario = geraUsuario(cardapio);
@@ -55,13 +79,13 @@ void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]){
     }
 }
 
-void controlaTempoUsuariosNasFilas(Fila filas[]){//Adiciona o tam da fila a quantidade de espera total, variável que será utilizada no relatório
+void controlaTempoUsuariosNasFilas(Fila filas[]){//Adiciona o tamanho da fila a quantidade de espera total, variável que será utilizada no relatório
     for(int i = 0; i<QTDFILAS; i++){
         filas[i].tempoDeEsperaTotal += filas[i].tamanho;
     }
 }
 
-Fila *retornaMenorFila(Fila filas[]){
+Fila *retornaMenorFila(Fila filas[]){//Retorna um ponteiro para a menor fila
     int menorTamanho = 999;
     int indiceMenorTamanho = -1;
 
@@ -81,7 +105,7 @@ Fila *retornaMenorFila(Fila filas[]){
 }
 
 
-void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]){
+void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]){//Desenfileira um usuario e posiciona em uma bancada vazia
         for(int i = 0; i < QTDBANCADAS; i++){
             if(qtdUsuariosNasFilas > 0){
                 if(bancadas[i].usuario == NULL){
@@ -91,14 +115,18 @@ void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]){
                     filaSorteada->primeiro = noAux->proximo;
                     filaSorteada->tamanho--;
                     qtdUsuariosNasFilas--;
-                    free(noAux);
+                    free(noAux); //Libera o nó que armazenava o usuário na fila
                     bancadas[i].usuario = usuario;
             }
         }
     }
 }
 
-Fila *sorteiaFila(Fila filas[]){
+
+
+
+
+Fila *sorteiaFila(Fila filas[]){//Retorna uma fila aleatória
     Fila *filaSorteada;
     do{
         filaSorteada = &filas[rand() % QTDFILAS];
@@ -107,40 +135,116 @@ Fila *sorteiaFila(Fila filas[]){
 }
 
 
-void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
-    for(int i = 0; i < QTDMAXSERVENTES; i++){
-        iniciaServente(&serventes[i], i);
-        //***printf("Servente: %d T: %d\n", serventes[i].id, serventes[i].tempoAtendimento);
+
+void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[], int duracao, int turno){
+    int tempo = 0;
+    int h = -1, m = -1;
+
+    if(turno == 1){
+        h = 6;
+        m = 30;
+    }else if(turno == 2){
+        h = 11;
+        m = 0;
+    }else{
+        h = 17;
+        m = 0;
+    }
+    
+
+    while(tempo <= duracao){
+        enfileiraUsuarios(cardapio, filas);
+        desenfileiraUsuarios(filas, bancadas);
+        serveUsuarios(bancadas, serventes);
+        checaServentes(bancadas, serventes);
+        checaVasilhas(bancadas);
+
+
+        if(tempo != 0 && m % 60 == 0){
+            h++;
+            m%=60;
+        }
+        printf("Tempo: %02d:%02d\n", h, m);
+        m++;
+        tempo++;
+
+
+        printf("Qtd usuarios nas filas: %d\n", qtdUsuariosNasFilas);
+                for(int i = 0; i < QTDFILAS; i++){
+                    if(filas[i].tamanho != 0){
+                        printf("Fila: %d Tam: %d\n", i, filas[i].tamanho);
+                    }
+                }
+                    
+
+        printf("Total consumido de cada igrediente: ");
+        for(int i = 0; i < TAMCARDAPIO; i++){
+            printf("%dg ", totalIngredientesConsumidos[i]);
+        }
+        printf("\n");
+
+        
+        sleep(1);
+        system("clear");//Linux
+        //system("cls"); Windows
+        
+        
+        
+        
+    
+        
+        
+        //Sleep(2000); Windows
+        //sleep(1); Linux
     }
 
-    for(int i = 0; i < QTDBANCADAS; i++){ //Inicia as bancadas e posiciona os serventes
-        iniciaBancada(&bancadas[i], cardapio);
+    
+    //Fazer uma checagem para caso o usuario esteja sendo servido
+    while(qtdUsuariosNasFilas > 0){
+        desenfileiraUsuarios(filas, bancadas);
+        serveUsuarios(bancadas, serventes);
+        checaServentes(bancadas, serventes);
+        checaVasilhas(bancadas);
 
-        int cont = 0, total;
-        total = rand() % 4 + 3;
-        
-        while(cont != total){
-            posicionaServente(&bancadas[i], serventes);
-            cont++;
-            //***printf("Rand: %d Contador: %d\n", total, cont);
-        }
-        
-    }
 
-    for(int i = 0; i < QTDFILAS; i++){
-            iniciaFila(&filas[i]);
+        if(tempo != 0 && m % 60 == 0){
+            h++;
+            m%=60;
         }
+        printf("Tempo: %02d:%02d\n", h, m);
+        m++;
+        tempo++;
+
+
+        printf("Qtd usuarios nas filas: %d\n", qtdUsuariosNasFilas);
+                for(int i = 0; i < QTDFILAS; i++){
+                    if(filas[i].tamanho != 0){
+                        printf("Fila: %d Tam: %d\n", i, filas[i].tamanho);
+                    }
+                }
+
+        printf("Total consumido de cada igrediente: ");
+        for(int i = 0; i < TAMCARDAPIO; i++){
+            printf("%dg ", totalIngredientesConsumidos[i]);
+        }
+        printf("\n");
+
+        
+        sleep(1);
+        system("clear");//Linux
+        //system("cls"); Windows
+        
+        
+        //Sleep(1000); Windows
+        //sleep(1); //Linux
+    }    
+
+
 
 }
 
 
 void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
-    /*
-    Ao final de cada expediente (quando o RU fechar e não existir mais usuários para serem
-atendidos), devem ser impressos relatórios com:
-○ a quantidade de usuários atendidos por cada servente e cada bancada,
-*/
-
     FILE *arquivo = fopen("Relatorio_RU.txt", "w");
     if(arquivo == NULL){
         printf("Erro ao escrever relatorio.\n");
@@ -150,13 +254,13 @@ atendidos), devem ser impressos relatórios com:
     fprintf(arquivo, "Quantidade Total de Usuarios: %d\n", qtdTotalUsuarios);
 
     for(int i = 0; i < QTDFILAS; i++){
-        fprintf(arquivo, "Tempo médio de espera na fila %d: %ds\n", i+1, filas[i].tempoDeEsperaTotal / filas[i].qtdTotalDeUsuarios); 
+        fprintf(arquivo, "Tempo médio de espera na fila %d: %ds\n", i, filas[i].tempoDeEsperaTotal / filas[i].qtdTotalDeUsuarios); 
     }
     fprintf(arquivo, "\n");
     
     for(int i = 0; i < QTDBANCADAS; i++){
-        fprintf(arquivo, "Tempo médio de espera na bancada %d: %ds\n", i+1, bancadas[i].tempoTotalServindo / bancadas[i].qtdUsuariosAtendidos);
-        fprintf(arquivo, "Quantidade de usuarios atendidos pela bancada %d: %d\n", i+1, bancadas[i].qtdUsuariosAtendidos);
+        fprintf(arquivo, "Tempo médio de espera na bancada %d: %ds\n", i, bancadas[i].tempoTotalServindo / bancadas[i].qtdUsuariosAtendidos);
+        fprintf(arquivo, "Quantidade de usuarios atendidos pela bancada %d: %d\n", i, bancadas[i].qtdUsuariosAtendidos);
     }
     fprintf(arquivo, "\n");
 
@@ -165,13 +269,9 @@ atendidos), devem ser impressos relatórios com:
     }
     fprintf(arquivo, "\n");
 
-
-    //bancadas[i].qtdUsuariosAtendidos
-    //bancadas[i].qtdUsuariosAtendidos / (bancadadas[i].tempoAtendimentoTotal) -> criar essa variavel;
-
-
-    //fprintf(arquivo, "Quai")
-
+    for(int i = 0; i < QTDSERVENTES; i++){
+        fprintf(arquivo, "Quantidade de usuarios atendidos pelo servente %d: %d\n", serventes[i].id, serventes[i].qtdUsuariosAtendidos);
+    }
 
     fclose(arquivo);
 }
