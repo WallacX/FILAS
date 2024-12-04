@@ -10,7 +10,8 @@ void iniciaServente(Servente *servente, int id){
 }
 
 
-void posicionaServente(Bancada *bancada, Servente serventes[]){
+void posicionaServente(Bancada *bancada, Servente serventes[]){ //Posiciona um servente na bancada respeitando a seguinte estrutura (112233) -> (142536)
+
     int idServente = retornaIdServenteDescansado(serventes);
 
     if(idServente!= -1 && !(bancada->qtdServentesBancada >= 6)){
@@ -44,18 +45,14 @@ void posicionaServente(Bancada *bancada, Servente serventes[]){
         bancada->qtdServentesBancada++;
         serventes[idServente].bancada = bancada;
         serventes[idServente].tempoDescansado = 0;
-        //printf("QTD serventes na bancada: %d\n", bancada->qtdServentesBancada);
-
     }else
         printf("Nao foi possivel posicionar o servente na bancada!\n");
-
 }
 
 
-int retornaIdServenteDescansado(Servente serventes[]){
-    for(int i = 0; i < QTDMAXSERVENTES; i++){
-        if(serventes[i].tempoDescansado >= TEMPOMINDESCANSOSERV && serventes[i].bancada == NULL){
-            //serventes[i].tempoTrabalhado = 0;
+int retornaIdServenteDescansado(Servente serventes[]){//Retorna o id de algum servente descansado
+    for(int i = 0; i < QTDSERVENTES; i++){
+        if(serventes[i].tempoDescansado >= TEMPOMINDESCANSOSERVENTE && serventes[i].bancada == NULL){
             return serventes[i].id;  
         }
     }
@@ -64,8 +61,8 @@ int retornaIdServenteDescansado(Servente serventes[]){
 }
 
 
-void checaServentes(Bancada bancadas[], Servente serventes[]){
-    for(int i = 0; i < QTDMAXSERVENTES; i++){
+void checaServentes(Bancada bancadas[], Servente serventes[]){//Checa se os serventes estão dentro do limite de tempo máximo trabalhado e troca os serventes caso seja nescessário
+    for(int i = 0; i < QTDSERVENTES; i++){//Aumenta os contadores de trabalho/descanso dos serventes
         if(serventes[i].bancada == NULL){
             serventes[i].tempoDescansado++;
         }  
@@ -75,16 +72,16 @@ void checaServentes(Bancada bancadas[], Servente serventes[]){
     }
 
 
-    for(int i = 0; i < QTDBANCADAS; i++){
+    for(int i = 0; i < QTDBANCADAS; i++){//Analisa cada bancada, e, caso o servente tenha chegado ao tempo limite de trabalho, substitui o servente
         for(int j = 0; j < QTDMAXSERVENTEBANCADA; j++){
-            if(serventes[bancadas[i].idServentes[j]].tempoTrabalhado >= TEMPOMAXTRABALHOSERV){
+            if(serventes[bancadas[i].idServentes[j]].tempoTrabalhado >= TEMPOMAXTRABALHOSERVENTE){
                 trocaServente(&bancadas[i], serventes, j);
             }
         }
     }
 }
 
-void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Posição do servente na bancada
+void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Troca o servente que atingiu o tempo máximo de trabalho de acordo com a posição dele na bancada e da quantidade de serventes na bancada
     serventes[bancada->idServentes[posServBanc]].tempoTrabalhado = 0;
     if(bancada->qtdServentesBancada == 3){
         serventes[bancada->idServentes[posServBanc]].bancada = NULL;
@@ -132,42 +129,68 @@ void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Po
 }
 
 
-void serveUsuarios(Bancada bancadas[], Servente serventes[]){
+void serveUsuarios(Bancada bancadas[], Servente serventes[]){//Aumenta o contador dos usuarios e caso tenha atingido a quantidade correta, serve o usuario
 
-    for(int i = 0; i < QTDBANCADAS; i++){
-        
+    for(int i = 0; i < QTDBANCADAS; i++){ //Passa por todas as bancadas
+        if(bancadas[i].usuario != NULL){ //Apenas as bancadas que estão com algum usuario
 
-        if(bancadas[i].usuario != NULL){
-
-            int tempoUsuarioAtendido = 0; // tempo pro usuario ser atendido
+            int tempoUsuarioAtendido = 0; //Variavel que armazena o tempo pro usuario ser atendido
             for(int j = 0; j < TAMCARDAPIO; j++){
                 if(bancadas[i].usuario->aceitacao[j] == true){
                     tempoUsuarioAtendido += serventes[bancadas[i].idServentes[j]].tempoAtendimento; //Varre o vetor adicionando o tempo do servente quando o usuario aceita o alimento
                 }
             }
 
+            bancadas[i].usuario->tempo++; //Aumenta o tempo que o usuario está na bancada
 
-            bancadas[i].usuario->tempo++;
-
-            if(bancadas[i].usuario->tempo >= tempoUsuarioAtendido){
+            if(bancadas[i].usuario->tempo >= tempoUsuarioAtendido){ //Se o tempo de espera do usuario já é suficiente, então serve a comida
                 int qtdComidaServida;
 
                 for(int k = 0; k < TAMCARDAPIO; k++){
                     if(bancadas[i].usuario->aceitacao[k] == true){
-                        qtdComidaServida = QTDMININGREDIENTES[i] + (rand() % (QTDMAXINGREDIENTES[i] - QTDMININGREDIENTES[i]) + 1);
+                        qtdComidaServida = QTDMININGREDIENTES[k] + (rand() % (QTDMAXINGREDIENTES[k] - QTDMININGREDIENTES[k]) + 1);
                         bancadas[i].vasilhas[k].qtdRestante -= qtdComidaServida;
                         totalIngredientesConsumidos[k] += qtdComidaServida;
                     }
                 }
 
-                free(bancadas[i].usuario);
-                bancadas[i].usuario = NULL;
-                bancadas[i].qtdUsuariosAtendidos++;
-                bancadas[i].tempoTotalServindo += tempoUsuarioAtendido;
-                
+                free(bancadas[i].usuario); //Libera a memória que o usuario estava armazenando
+                bancadas[i].usuario = NULL; //Aponta o ponteiro da bancada para nulo
+                bancadas[i].qtdUsuariosAtendidos++; //Aumenta a quantidade de usuarios atendidos pela bancada
+                bancadas[i].tempoTotalServindo += tempoUsuarioAtendido; //Adiciona o tempo que o usuario demorou para ser servido ao tempo total que a bancada serviu
 
+
+                atualizaContadorServentes(&bancadas[i], serventes);
 
             }
         }
+    }
+}
+
+
+
+void atualizaContadorServentes(Bancada *bancada, Servente serventes[]){//Atualiza o contador de usuarios atendidos de cada servente de acordo com a quantidade de serventes na bancada
+    if(bancada->qtdServentesBancada == 3){
+        serventes[bancada->idServentes[0]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[2]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[4]].qtdUsuariosAtendidos++;
+
+    }else if(bancada->qtdServentesBancada == 4){
+        serventes[bancada->idServentes[0]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[1]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[2]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[4]].qtdUsuariosAtendidos++;
+
+    }else if(bancada->qtdServentesBancada == 5){
+        serventes[bancada->idServentes[0]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[1]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[2]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[3]].qtdUsuariosAtendidos++;
+        serventes[bancada->idServentes[4]].qtdUsuariosAtendidos++;
+
+    }else if(bancada->qtdServentesBancada == 6){
+        for(int i = 0; i < TAMCARDAPIO; i++){
+            serventes[bancada->idServentes[i]].qtdUsuariosAtendidos++;
+        }   
     }
 }
