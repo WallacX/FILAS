@@ -1,9 +1,11 @@
 #ifndef FILA_H
 #define FILA_H
 
+#include <unistd.h>
 #include "usuario.h"
 #include "servente.h"
 #include "bancada.h"
+
 
 #define QTDFILAS 5
 
@@ -15,9 +17,9 @@ typedef struct No{
 typedef struct{
     No *primeiro;
     No *ultimo;
-    int tamanho;
-    int qtdTotalDeUsuarios;
-    int tempoDeEsperaTotal;
+    int tamanho; //Tamanho atual da fila
+    int qtdTotalDeUsuarios; //Quantidade total de usuarios que entrou na respectiva fila
+    int tempoDeEsperaTotal; //Tempo de espera total dos usuarios que entraram na respectiva fila
 }Fila;
 
 
@@ -32,6 +34,8 @@ void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]);
 Fila *sorteiaFila(Fila filas[]);
 
 void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
+
+void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[], int duracao, int turno);
 
 void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
 
