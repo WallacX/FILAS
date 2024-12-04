@@ -7,17 +7,17 @@
 
 
 #define QTDBANCADAS 6
-#define QTDMINSERVENTEBANCADA 3       
+#define QTDMINSERVENTEBANCADA 3
 #define QTDMAXSERVENTEBANCADA 6
 
 
 typedef struct Bancada{
     int qtdUsuariosAtendidos;
     int qtdServentesBancada;
-    int idServentes[TAMCARDAPIO];
+    int idServentes[TAMCARDAPIO]; //Armazena o id dos serventes em cada posição da bancada
     Vasilha vasilhas[TAMCARDAPIO];
-    Usuario *usuario;
-    int tempoTotalServindo;
+    Usuario *usuario; //Aponta pra o usuario que está na bancada naquele momento
+    int tempoTotalServindo; //Armazena o tempo total (do dia inteiro) que a bancada serviu
 }Bancada;
 
 
