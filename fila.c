@@ -42,8 +42,6 @@ bool filaVazia(Fila *fila){
 
 
 
-
-
 void enfileiraUsuarios(Ingrediente cardapio[], Fila filas[]){//Gera e enfileira os usuários
     controlaTempoUsuariosNasFilas(filas);
 
@@ -142,8 +140,6 @@ void desenfileiraUsuarios(Fila filas[], Bancada bancadas[]){//Desenfileira um us
 
 
 
-
-
 Fila *sorteiaFila(Fila filas[]){ //Retorna uma fila aleatória com um usuario não vegetariano
     int vNaoVeg[QTDFILAS]; //Vetor que armazena indices das filas em que o primeiro usuario não é vegetariano
     int cont = 0;
@@ -165,14 +161,18 @@ Fila *sorteiaFila(Fila filas[]){ //Retorna uma fila aleatória com um usuario n�
 
 
 
-
 void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
-    int clocks = 0;
-    int h = 0, m = 0;
+    int clocks = 380;
+    int h = 6, m = 20;
     bool preparado = true;
     
     while(h<=23){
-        if((clocks >= 390 && clocks <= 540) || (clocks >= 660 && clocks <= 840) || (clocks >= 1020 && clocks <= 140)){
+        printf("Horario: %02d:%02d\n", h, m);
+        m++;
+        clocks++;
+
+        if((clocks >= 390 && clocks <= 540) || (clocks >= 660 && clocks <= 840) || (clocks >= 1020 && clocks <= 1400)){
+            printf("----- RU ABERTO -----\n");
             enfileiraUsuarios(cardapio, filas);
             desenfileiraUsuarios(filas, bancadas);
             serveUsuarios(bancadas, serventes);
@@ -180,61 +180,61 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
             checaVasilhas(bancadas);
         }
         else if(checaUsuariosNoRU(bancadas)){
+            printf("----- RU FECHADO -----\n");
+            printf("(Servindo os usuarios)\n");
             desenfileiraUsuarios(filas, bancadas);
             serveUsuarios(bancadas, serventes);
             checaServentes(bancadas, serventes);
             checaVasilhas(bancadas);
+        }else if(!(checaUsuariosNoRU(bancadas))){
+            printf("----- RU FECHADO -----\n");
+            if(clocks > 1400){
+                system("clear");
+                printf("----- DIA ENCERRADO");
+                break;
+            }
+                
         }
-        else{
-            checaServentes(bancadas, serventes);
-            checaVasilhas(bancadas);
-        }
-    
         
 
         if(clocks != 0 && m % 60 == 0){
             h++;
             m%=60;
-            }
-        printf("Tempo: %02d:%02d\n", h, m);
-        m++;
-        clocks++;
+        }
+
+        
+
+        printf("Bancadas atendendo os usuarios: ");
+        for(int i = 0; i < QTDBANCADAS; i++){
+            if(bancadas[i].usuario != NULL)
+                printf("%d ", bancadas[i].usuario->id);
+            else
+                printf("0 ");
+        }
+
+        printf("\n\nQuantidade total de usuarios nas filas: %d\n", qtdUsuariosNasFilas);
+        for(int i = 0; i < QTDFILAS; i++){
+            printf("Tamanho da fila %d: %d\n", i+1, filas[i].tamanho);
         }
 
 
-
-        printf("Qtd usuarios nas filas: %d\n", qtdUsuariosNasFilas);
-                for(int i = 0; i < QTDFILAS; i++){
-                    if(filas[i].tamanho != 0){
-                        printf("Fila: %d Tam: %d\n", i, filas[i].tamanho);
-                    }
-                }
-                    
-
-        printf("Total consumido de cada igrediente: ");
+        printf("\nTotal consumido de cada igrediente: ");
         for(int i = 0; i < TAMCARDAPIO; i++){
-            printf("%dg ", totalIngredientesConsumidos[i]);
+            printf("%.3fKg ", (float)totalIngredientesConsumidos[i] / 1000);
         }
         printf("\n");
 
-        
-        //sleep(1);
-        system("clear");//Linux
-        //system("cls"); Windows
-        
-        
-        
-        
-    
-        
-        
-        //Sleep(2000); Windows
-        //sleep(1); Linux
+
+        sleep(1); //Linux
+        system("clear"); //Linux
+
+        //Sleep(1000); //Windows
+        //system("cls"); //Windows
+    }
 }
 
-      
-
-
+     
+ 
 bool checaUsuariosNoRU(Bancada bancadas[]){//Confere se há usuarios nas filas e se há usuarios sendo servidos
     if(qtdUsuariosNasFilas > 0) //Caso haja algum usuário em alguma fila retorna verdadeiro
         return true;
@@ -268,7 +268,7 @@ void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], 
     fprintf(arquivo, "Tempo médio de espera nas filas: %ds\n", aux1 / aux2);
 
     for(int i = 0; i < QTDFILAS; i++){
-        fprintf(arquivo, "Tempo médio de espera na fila %d: %ds\n", i, filas[i].tempoDeEsperaTotal / filas[i].qtdTotalDeUsuarios); 
+        fprintf(arquivo, "Tempo médio de espera na fila %d: %ds\n", i+1, filas[i].tempoDeEsperaTotal / filas[i].qtdTotalDeUsuarios); 
     }
     fprintf(arquivo, "\n");
 
@@ -302,7 +302,7 @@ void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], 
     aux1 = 0;
 
     for(int i = 0; i < QTDSERVENTES; i++){
-        fprintf(arquivo, "Quantidade de usuarios atendidos pelo servente %02d: %02d\n", serventes[i].id, serventes[i].qtdUsuariosAtendidos);
+        fprintf(arquivo, "Quantidade de usuarios atendidos pelo servente %02d: %02d\n", serventes[i].id+1, serventes[i].qtdUsuariosAtendidos);
         aux1 += serventes[i].qtdUsuariosAtendidos;
     }
     fprintf(arquivo, "Quantidade média de usúarios atendidos pelos serventes: %d\n", aux1/ QTDSERVENTES);
