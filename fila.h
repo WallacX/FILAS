@@ -2,6 +2,7 @@
 #define FILA_H
 
 #include <unistd.h>
+#include <stdbool.h>
 #include "usuario.h"
 #include "servente.h"
 #include "bancada.h"
@@ -35,8 +36,10 @@ Fila *sorteiaFila(Fila filas[]);
 
 void iniciaRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
 
-void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[], int duracao, int turno);
+void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
+bool checaUsuariosNoRU(Bancada bancadas[]);
 
 void imprimeRelatorio(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]);
+
 
 #endif // FILA_H
