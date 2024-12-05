@@ -50,14 +50,17 @@ void posicionaServente(Bancada *bancada, Servente serventes[]){ //Posiciona um s
 }
 
 
-int retornaIdServenteDescansado(Servente serventes[]){//Retorna o id de algum servente descansado
+int retornaIdServenteDescansado(Servente serventes[]){//Retorna aleatoriamente o id de algum servente descansado
+    int cont = 0;
+    int idDescansados[QTDSERVENTES] = {-1}; //Cria um vetor que vai armazenar os indices dos serventes descansados
+
     for(int i = 0; i < QTDSERVENTES; i++){
         if(serventes[i].tempoDescansado >= TEMPOMINDESCANSOSERVENTE && serventes[i].bancada == NULL){
-            return serventes[i].id;  
-        }
+            idDescansados[cont] = i; //Armazena o indice do servente descansado no vetor
+            cont++;
+        } 
     }
-    printf("Todos os serventes estao cansados\n");
-    return -1;
+    return serventes[idDescansados[rand()%cont]].id; 
 }
 
 
