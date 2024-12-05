@@ -9,7 +9,7 @@ Usuario *geraUsuario(Ingrediente cardapio[]){
     
     usuario->id = ++qtdTotalUsuarios; //Incrementa o contador total de usuarios e atribui ao id do ususario
     int veg = rand()%101; //Define se o usuario será vegetariano ou não.
-    if(veg > 80)
+    if(veg > 85)
         usuario->vegetariano = true;
     else
         usuario->vegetariano = false;

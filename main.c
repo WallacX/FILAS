@@ -29,6 +29,7 @@ int main(){
 
     imprimeCardapio(cardapio);
     sleep(2);
+    system("clear");
     
     funcionamentoRU(cardapio, bancadas, filas, serventes); //Café da manhã
 

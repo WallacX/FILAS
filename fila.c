@@ -204,7 +204,7 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
 
         
 
-        printf("Bancadas atendendo os usuarios: ");
+        printf("\nBancadas atendendo os usuarios: ");
         for(int i = 0; i < QTDBANCADAS; i++){
             if(bancadas[i].usuario != NULL)
                 printf("%d ", bancadas[i].usuario->id);
@@ -218,9 +218,9 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
         }
 
 
-        printf("\nTotal consumido de cada igrediente: ");
+        printf("\nTotal consumido de cada igrediente:\n");
         for(int i = 0; i < TAMCARDAPIO; i++){
-            printf("%.3fKg ", (float)totalIngredientesConsumidos[i] / 1000);
+            printf("%s: %.3fKg\n", cardapio[i].nome ,(float)totalIngredientesConsumidos[i] / 1000);
         }
         printf("\n");
 

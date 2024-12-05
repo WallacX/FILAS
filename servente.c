@@ -86,6 +86,8 @@ void checaServentes(Bancada bancadas[], Servente serventes[]){//Checa se os serv
 
 void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Troca o servente que atingiu o tempo máximo de trabalho de acordo com a posição dele na bancada e da quantidade de serventes na bancada
     serventes[bancada->idServentes[posServBanc]].tempoTrabalhado = 0;
+    printf("\nO servente %d foi descansar ", bancada->idServentes[posServBanc]);
+
     if(bancada->qtdServentesBancada == 3){
         serventes[bancada->idServentes[posServBanc]].bancada = NULL;
         bancada->idServentes[posServBanc] = -1;
@@ -118,12 +120,14 @@ void trocaServente(Bancada *bancada, Servente serventes[], int posServBanc){//Tr
             serventes[bancada->idServentes[posServBanc]].bancada = NULL;
             bancada->idServentes[posServBanc] = -1;
         }
+
     }
     
     int id = retornaIdServenteDescansado(serventes);
     serventes[id].bancada = bancada;
     serventes[id].tempoDescansado = 0;
     serventes[id].tempoTrabalhado = 0;
+    printf("e o servente %d entrou no seu lugar\n", id);
     for(int i = 0; i < TAMCARDAPIO; i++){
         if(bancada->idServentes[i] == -1){
             bancada->idServentes[i] = id;
