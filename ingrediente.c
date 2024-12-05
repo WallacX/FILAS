@@ -1,7 +1,7 @@
 #include "ingrediente.h"
 
 int totalIngredientesConsumidos[6] = {0};  
-const int QTDMAXINGREDIENTES[6] = {200, 220, 300, 150, 250, 280}; 
+const int QTDMAXINGREDIENTES[6] = {200, 220, 300, 180, 250, 280}; 
 const int QTDMININGREDIENTES[6] = {30, 20, 50, 10, 40, 60};
 
 const char *todosIngredientes[] = {
