@@ -15,11 +15,14 @@ void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]){//Inicia as variave
 
 }
 
+
 void checaVasilhas(Bancada bancadas[]){//Checa se a quantidade dos ingredientes é suficiente para servir o usuario, caso não seja, preenche a vasilha
     for(int i = 0; i < QTDBANCADAS; i++){
         for(int j = 0; j < TAMCARDAPIO; j++){
-            if(bancadas[i].vasilhas[j].qtdRestante < QTDMAXINGREDIENTES[j])
+            if(bancadas[i].vasilhas[j].qtdRestante < QTDMAXINGREDIENTES[j]){
+                printf("Vasilha de %s da bancada %d trocada\n", bancadas[i].vasilhas[j].ingrediente.nome, i+1);
                 bancadas[i].vasilhas[j].qtdRestante = CAPACIDADE_INGREDIENTE;
+            }
         }
     }
 }
