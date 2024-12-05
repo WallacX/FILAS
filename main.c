@@ -15,6 +15,7 @@
 int main(){
     srand(time(NULL));
 
+    //conve
     //Declaração dos vetores com seus respectivos tamanhos
     Ingrediente cardapio[TAMCARDAPIO];
     Bancada bancadas[QTDBANCADAS];
@@ -29,9 +30,7 @@ int main(){
     imprimeCardapio(cardapio);
     sleep(2);
     
-    funcionamentoRU(cardapio, bancadas, filas, serventes, TEMPOFUNCIONAMENTOCAFE, 1); //Café da manhã
-    funcionamentoRU(cardapio, bancadas, filas, serventes, TEMPOFUNCIONAMENTOALMOCO, 2); //Almoço
-    funcionamentoRU(cardapio, bancadas, filas, serventes, TEMPOFUNCIONAMENTOJANTAR, 3); //Jantar
+    funcionamentoRU(cardapio, bancadas, filas, serventes); //Café da manhã
 
     imprimeRelatorio(cardapio, bancadas, filas, serventes);
 
