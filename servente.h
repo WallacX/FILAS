@@ -1,9 +1,11 @@
 #ifndef SERVENTE_H
 #define SERVENTE_H
 
+#include <stdlib.h>
+#include <time.h>
 #include "bancada.h"
 
-#define QTDSERVENTES 6 * QTDBANCADAS * 2 //Garante que a quantidade de serventes vai ser suficiente para todas as bancadas mesmo com as trocas
+#define QTDSERVENTES (6 * QTDBANCADAS * 2) //Garante que a quantidade de serventes vai ser suficiente para todas as bancadas mesmo com as trocas
 #define TEMPOMAXTRABALHOSERVENTE 60
 #define TEMPOMINDESCANSOSERVENTE 30
 
