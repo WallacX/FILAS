@@ -18,7 +18,13 @@ int main(){
 
 
     imprimeCardapio(cardapio);
-    sleep(10);
+    #ifdef OS_Windows
+        Sleep(10000);
+        system("cls");
+    #else
+        sleep(1);
+        system("clear");
+    #endif
     
     funcionamentoRU(cardapio, bancadas, filas, serventes);
 
