@@ -162,12 +162,6 @@ Fila *sorteiaFila(Fila filas[]){ //Retorna uma fila aleat√≥ria com um usuario n√
 
 
 void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
-    #ifdef OS_Windows
-        system("cls");
-    #else
-        system("clear");
-    #endif
-
 
     int clocks = 390;// 1 clock equivale a 1 minuto
     int h = 6, m = 30;
