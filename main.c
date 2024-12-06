@@ -1,21 +1,11 @@
 // gcc main.c bancada.c vasilha.c ingrediente.c usuario.c fila.c servente.c -o programa
 // ./programa
 
-#include <stdio.h>
-//#include <windows.h>//Ativar quando for no windows para usar a função sleep 
-#include <unistd.h> //Linux
 #include "fila.h"
-
-//importar stdlib na servente.h e tentar retornar um id aleatorio em retorna id servente
-
-#define TEMPOFUNCIONAMENTOCAFE 150
-#define TEMPOFUNCIONAMENTOALMOCO 210
-#define TEMPOFUNCIONAMENTOJANTAR 150
 
 int main(){
     srand(time(NULL));
 
-    //conve
     //Declaração dos vetores com seus respectivos tamanhos
     Ingrediente cardapio[TAMCARDAPIO];
     Bancada bancadas[QTDBANCADAS];
@@ -28,10 +18,9 @@ int main(){
 
 
     imprimeCardapio(cardapio);
-    sleep(2);
-    system("clear");
+    sleep(10);
     
-    funcionamentoRU(cardapio, bancadas, filas, serventes); //Café da manhã
+    funcionamentoRU(cardapio, bancadas, filas, serventes);
 
     imprimeRelatorio(cardapio, bancadas, filas, serventes);
 
