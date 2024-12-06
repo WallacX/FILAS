@@ -162,8 +162,15 @@ Fila *sorteiaFila(Fila filas[]){ //Retorna uma fila aleat√≥ria com um usuario n√
 
 
 void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], Servente serventes[]){
-    int clocks = 380;
-    int h = 6, m = 20;
+    #ifdef OS_Windows
+        system("cls");
+    #else
+        system("clear");
+    #endif
+
+
+    int clocks = 390;// 1 clock equivale a 1 minuto
+    int h = 6, m = 30;
     bool preparado = true;
     
     while(h<=23){
@@ -171,7 +178,7 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
         m++;
         clocks++;
 
-        if((clocks >= 390 && clocks <= 540) || (clocks >= 660 && clocks <= 840) || (clocks >= 1020 && clocks <= 1400)){
+        if((clocks >= 390 && clocks <= 540) || (clocks >= 660 && clocks <= 870) || (clocks >= 1020 && clocks <= 1170)){//Clocks correspondentes a quantidade de minutos do funcionamento do ru
             printf("----- RU ABERTO -----\n");
             enfileiraUsuarios(cardapio, filas);
             desenfileiraUsuarios(filas, bancadas);
@@ -188,9 +195,10 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
             checaVasilhas(bancadas);
         }else if(!(checaUsuariosNoRU(bancadas))){
             printf("----- RU FECHADO -----\n");
-            if(clocks > 1400){
+            if(clocks > 1170){
                 system("clear");
-                printf("----- DIA ENCERRADO");
+                printf("----- DIA ENCERRADO -----\n");
+                printf("  Relatorio Disponivel!\n");
                 break;
             }
                 
@@ -224,12 +232,13 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
         }
         printf("\n");
 
-
-        sleep(1); //Linux
-        system("clear"); //Linux
-
-        //Sleep(1000); //Windows
-        //system("cls"); //Windows
+        #ifdef OS_Windows
+            Sleep(1000);
+            system("cls");
+        #else
+            sleep(1);
+            system("clear");
+        #endif
     }
 }
 
