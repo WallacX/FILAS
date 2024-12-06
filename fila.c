@@ -171,7 +171,6 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
 
     int clocks = 390;// 1 clock equivale a 1 minuto
     int h = 6, m = 30;
-    bool preparado = true;
     
     while(h<=23){
         printf("Horario: %02d:%02d\n", h, m);
