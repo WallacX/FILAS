@@ -1,11 +1,19 @@
 #ifndef FILA_H
 #define FILA_H
 
-#include <unistd.h>
 #include <stdbool.h>
 #include "usuario.h"
 #include "servente.h"
 #include "bancada.h"
+
+
+//Checa se o sistema é linux ou windows e inclui a biblioteca correspondente
+#ifdef __unix__         
+    #include <unistd.h>
+#elif defined(_WIN32) || defined(WIN32) 
+   #define OS_Windows
+   #include <windows.h>
+#endif
 
 
 #define QTDFILAS 5
