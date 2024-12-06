@@ -4,13 +4,12 @@
 #include <stdio.h>
 #include "ingrediente.h"
 
-#define CAPACIDADE_INGREDIENTE 10000
-#define TEMPO_SUBSTITUICAO 3
+#define CAPACIDADE_INGREDIENTE 5000 //5000 Gramas / 5 Quilos
 
 
 typedef struct Vasilha{
     Ingrediente ingrediente;
-    int qtdRestante;
+    int qtdRestante; //Quantidade restante na vasilha
 }Vasilha;
 
 void iniciaVasilha(Vasilha *vasilha, Ingrediente ingrediente);

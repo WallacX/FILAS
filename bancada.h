@@ -5,25 +5,24 @@
 #include "vasilha.h"
 #include "usuario.h"
 
-#define QTDMINBANCADAS 2
-#define QTDMAXBANCADAS 4
-#define QTDMINSERVENTEBANCADA 3       
+
+#define QTDBANCADAS 6
+#define QTDMINSERVENTEBANCADA 3
 #define QTDMAXSERVENTEBANCADA 6
 
 
-extern int qtdBancadasAtivas;
-
-
 typedef struct Bancada{
-    int identificador;
     int qtdUsuariosAtendidos;
+    int qtdServentesBancada;
+    int idServentes[TAMCARDAPIO]; //Armazena o id dos serventes em cada posição da bancada
     Vasilha vasilhas[TAMCARDAPIO];
-    //podemos fazer dentro da struct ou ent um vetor global contando que vai somar o tempo dos atendentes
-    Usuario *usuario;
+    Usuario *usuario; //Aponta pra o usuario que está na bancada naquele momento
+    int tempoTotalServindo; //Armazena o tempo total (do dia inteiro) que a bancada serviu
 }Bancada;
 
 
 void iniciaBancada(Bancada *bancada, Ingrediente cardapio[]);
 
+void checaVasilhas(Bancada bancadas[]);
 
 #endif // BANCADA_H

@@ -1,5 +1,9 @@
 #include "ingrediente.h"
 
+int totalIngredientesConsumidos[6] = {0};  
+const int QTDMAXINGREDIENTES[6] = {200, 220, 300, 180, 250, 280}; 
+const int QTDMININGREDIENTES[6] = {30, 20, 50, 10, 40, 60};
+
 const char *todosIngredientes[] = {
     "Arroz", "Feijao", "Carne", "Salada", "Macarrao", "Frango",
     "Peixe", "Legumes", "Batata", "Ovo", "Sopa", "Fruta"
@@ -17,9 +21,9 @@ void criaCardapio(Ingrediente cardapio[]){
 
         indicesUsados[indiceAleatorio] = 1;
 
-        int grauAceitacao = rand() % 51 + 50;
+        int grauAceitacao = rand() % 61 + 40; //Define como 40 o minimo de aceitação para cada ingrediente
 
-        cardapio[i] = criaIngrediente(grauAceitacao, todosIngredientes[indiceAleatorio]); //cria e add ingrediente ao cardapio
+        cardapio[i] = criaIngrediente(grauAceitacao, todosIngredientes[indiceAleatorio]); //Cria e adiciona o ingrediente ao cardapio
     }
 }
 
@@ -35,6 +39,6 @@ Ingrediente criaIngrediente(int grauAceit, const char nome[]){
 void imprimeCardapio(Ingrediente cardapio[]){
     printf("Cardapio do dia:\n");
     for(int i = 0; i < TAMCARDAPIO; i++){
-        printf("Ingrediente: %s, Grau de Aceitacao: %d\n", cardapio[i].nome, cardapio[i].grauAceitacao);
+        printf("Ingrediente: %s, Grau de Aceitacao: %d%%\n", cardapio[i].nome, cardapio[i].grauAceitacao);
     }
 }
