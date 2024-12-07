@@ -189,7 +189,13 @@ void funcionamentoRU(Ingrediente cardapio[], Bancada bancadas[], Fila filas[], S
         }else if(!(checaUsuariosNoRU(bancadas))){
             printf("----- RU FECHADO -----\n");
             if(clocks > 1170){
-                system("clear");
+                #ifdef OS_Windows
+                    Sleep(1000);
+                    system("cls");
+                #else
+                    sleep(1);
+                    system("clear");
+                    #endif
                 printf("----- DIA ENCERRADO -----\n");
                 printf("  Relatorio Disponivel!\n");
                 break;
